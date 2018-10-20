@@ -19,8 +19,8 @@ from django.views.generic import TemplateView
 from app import views
 
 urlpatterns = [
-    path(r'', views.front, name='front'),
-    path('index/', views.front, name='front'),
+    path(r'', views.landing, name='landing'),
+    path('index/', views.landing, name='landing'),
     path('admin/', admin.site.urls),
     re_path('app/', TemplateView.as_view(template_name='index.html')),
 ]
