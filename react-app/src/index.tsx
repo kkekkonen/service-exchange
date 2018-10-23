@@ -5,14 +5,14 @@ import * as ReactDOM from 'react-dom';
 
 import App from './App';
 import {
-  BrowserRouter
+  HashRouter
 } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
