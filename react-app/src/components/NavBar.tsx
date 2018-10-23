@@ -95,7 +95,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
           <Divider />
           <List>
             <ListSubheader component="div">I need something</ListSubheader>
-            <ListItem button>
+            <ListItem button component="a" href="#/consumer/available_services">
                 <ListItemIcon><RoomServiceIcon /></ListItemIcon>
                 <ListItemText primary="Available services" />
             </ListItem>
