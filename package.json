@@ -1,1 +1,3 @@
- "start": { "postinstall": "cd react-app && npm run build" }
+{
+    "start": { "postinstall": "cd react-app && npm run build" }
+}
