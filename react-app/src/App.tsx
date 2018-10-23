@@ -29,21 +29,35 @@ class App extends React.Component<IAppProps> {
   public static contextTypes = {
     router: PropTypes.object
   };
+
   public render() {
     const { classes } = this.props;
     return (
       <div className="App">
-        <ResponsiveDrawer title={this.context.router.route.location.pathname} />
+        <ResponsiveDrawer title={this.findComponentTitle()} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
             <Route title="Home" exact path='/' component={Main}/>
-            <Route title="Consumer main"exact path='/consumer' component={ConsumerMain}/>
+            <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
             <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
           </Switch>
         </main>
       </div>
     );
+  }
+
+  private findComponentTitle = () => {
+    switch (this.context.router.route.location.pathname) {
+      case '/':
+        return 'Home';
+      case '/consumer':
+        return 'Consumer main';
+      case '/consumer/available_services':
+        return 'Available services';
+      default:
+        return 'Page not found';
+    }
   }
 }
 

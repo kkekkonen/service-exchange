@@ -27,12 +27,12 @@ class Main extends React.Component<IMainProps> {
           </Grid>
           <Grid item xs={12}>
             <Button href="#/consumer" variant="contained" color="primary" className="button">
-              I want to sell something
+              I need something
             </Button>
           </Grid>
           <Grid item xs={12}>
             <Button href="#/consumer" variant="contained" color="primary" className="button">
-              I want to provide something
+              I provide something
             </Button>
           </Grid>
         </Grid>
