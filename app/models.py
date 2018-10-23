@@ -14,6 +14,6 @@ class Request(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     maxPrice = models.FloatField(default=0)
     minPrice = models.FloatField(default=0)
-    zipcode = models.IntegerField
-    description = models.TextField
+    zipcode = models.IntegerField(default=0)
+    description = models.TextField(default="")
     timestamp = models.DateTimeField(editable=False, default=timezone.now)

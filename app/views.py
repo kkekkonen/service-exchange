@@ -2,9 +2,10 @@ from django.shortcuts import render
 from app.forms import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.core import serializers
-from app.models import Request
+from app.models import *
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
@@ -69,15 +70,52 @@ def create_request(request):
         except:
             return HttpResponse(status=400)
     else:
-        return HTTPResponse(statud=405)
+        return HttpResponse(statud=405)
 
 @login_required
 def my_requests(request):
     if(request.method == "GET"):
-        myRequests = serializers.serialize('json', Reqeust.objects.filter(consumer=request.user).all())
-        return HTTPResponse(myRequests,status=200,content_type ="application/json")
+        myRequests = Request.objects.filter(consumer=request.user).all()
+        response = [{'id': r.pk,
+         'name': r.title,
+         'minPrice': r.minPrice,
+         'maxPrice': r.maxPrice,
+         'category': r.category.category,
+         'zipcode': r.zipcode,
+         'timestamp': r.timestamp,
+         'description': r.description
+        } for r in myRequests]
+        return JsonResponse({'count': len(myRequests), 'requests': response})
     else:
-        return HTTPResponse(statud=405)
+        return HttpResponse(statud=405)
+
+@login_required
+def all_requests(request):
+    if(request.method == "GET"):
+        myRequests = Request.objects.all()
+        response = [{'id': r.pk,
+         'name': r.title,
+         'minPrice': r.minPrice,
+         'maxPrice': r.maxPrice,
+         'category': r.category.category,
+         'zipcode': r.zipcode,
+         'timestamp': r.timestamp,
+         'description': r.description
+        } for r in myRequests]
+        return JsonResponse({'count': len(myRequests), 'requests': response})
+    else:
+        return HttpResponse(statud=405)
+
+@login_required
+def categories(request):
+    if(request.method == "GET"):
+        categories = Category.objects.all()
+        response = [{'id': r.pk,
+         'category': r.category,
+        } for r in categories]
+        return JsonResponse({'count': len(categories), 'requests': response})
+    else:
+        return HttpResponse(statud=405)
 
 def logout(request):
     auth_logout(request)
