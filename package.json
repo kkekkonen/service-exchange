@@ -1,0 +1,1 @@
+ "start": { "postinstall": "cd react-app && npm run build" }
