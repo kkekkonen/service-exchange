@@ -6,15 +6,19 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import Hidden from '@material-ui/core/Hidden';
+import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuIcon from '@material-ui/icons/Menu';
+import PersonIcon from '@material-ui/icons/Person';
+import RoomServiceIcon from '@material-ui/icons/RoomService';
+import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -79,21 +83,42 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
           <div className={classes.toolbar} />
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon><MailIcon /></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button component="a" href="#/">
+                <ListItemIcon><HomeIcon /></ListItemIcon>
+                <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><PersonIcon /></ListItemIcon>
+                <ListItemText primary="My profile" />
+            </ListItem>
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon><InboxIcon /></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListSubheader component="div">I need something</ListSubheader>
+            <ListItem button>
+                <ListItemIcon><RoomServiceIcon /></ListItemIcon>
+                <ListItemText primary="Available services" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><FeedbackIcon /></ListItemIcon>
+                <ListItemText primary="My requests" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListSubheader component="div">I provide something</ListSubheader>
+            <ListItem button>
+                <ListItemIcon><FeedbackIcon /></ListItemIcon>
+                <ListItemText primary="Open requests" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><RoomServiceIcon /></ListItemIcon>
+                <ListItemText primary="My services" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon><SupervisorAccount /></ListItemIcon>
+                <ListItemText primary="My offers" />
+            </ListItem>
           </List>
         </div>
       );
