@@ -2,7 +2,7 @@ astroid==1.6.5
 backports.functools-lru-cache==1.5
 configparser==3.5.0
 dj-database-url==0.5.0
-Django==1.11.16
+Django==2.1
 django-heroku==0.3.1
 enum34==1.1.6
 futures==3.2.0
