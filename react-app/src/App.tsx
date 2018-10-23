@@ -1,19 +1,24 @@
-import * as React from 'react';
 import './App.css';
 
-import logo from './logo.svg';
+import * as React from 'react';
+
+import { Route, Switch } from 'react-router-dom'
+
+import ConsumerMain from './views/ConsumerMain';
+import Main from './views/Main';
+import ResponsiveDrawer from './components/NavBar'
 
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <ResponsiveDrawer title="TODO: Pass current router view title here" />
+        <main>
+        <Switch>
+          <Route exact path='/' component={Main}/>
+          <Route path='/consumer' component={ConsumerMain}/>
+        </Switch>
+        </main>
       </div>
     );
   }
