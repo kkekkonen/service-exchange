@@ -7,7 +7,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core import serializers
 from app.models import *
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+import json
 
 # Create your views here.
 
@@ -46,33 +48,35 @@ def login(request):
             context = {'result_message': 'Invalid login! Please try again.'}
             return render(request, 'login.html', context)
 
-@login_required
+#@login_required
+@csrf_exempt
 def create_request(request):
     if(request.method == "POST"):
         try:
-            category = Category.objects.get(pk=request.POST.get('category_id'))
-        except:
-            return HttpResponse("invalid category", status=400)
-        requestDict = {
-            'title': request.POST.get('title'),
-            'consumer': request.user,
-            'category': category,
-            'minPrice': request.POST.get('min_price'),
-            'maxPrice': request.POST.get('max_price'),
-            'description': request.POST.get('description'),
-            'zipcode': request.POST.get('zipcode'),
-            'timestamp': datetime.now(),
-        }
-        try:
-            request = Request(**dict)
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            user = User.objects.get(pk=body['user'])
+            category = Category.objects.get(pk=body['category_id'])
+            requestDict = {
+                'title': body['title'],
+                'consumer': user,
+                'category': category,
+                'minPrice': body['minPrice'],
+                'maxPrice': body['maxPrice'],
+                'description': body['description'],
+                'zipcode': body['zipcode'],
+                'timestamp': datetime.now(),
+            }
+            request = Request(**requestDict)
             request.save()
             return HttpResponse(status=200)
-        except:
-            return HttpResponse(status=400)
+        except Exception as e:
+            return HttpResponse("invalid request", status=400)
     else:
-        return HttpResponse(statud=405)
+        return HttpResponse(status=405)
 
-@login_required
+#@login_required
+@csrf_exempt
 def my_requests(request):
     if(request.method == "GET"):
         myRequests = Request.objects.filter(consumer=request.user).all()
@@ -89,7 +93,8 @@ def my_requests(request):
     else:
         return HttpResponse(statud=405)
 
-@login_required
+#@login_required
+@csrf_exempt
 def all_requests(request):
     if(request.method == "GET"):
         myRequests = Request.objects.all()
