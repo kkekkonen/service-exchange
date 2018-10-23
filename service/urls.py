@@ -22,5 +22,9 @@ urlpatterns = [
     path(r'', views.landing, name='landing'),
     path('index/', views.landing, name='landing'),
     path('admin/', admin.site.urls),
-    re_path('app/', TemplateView.as_view(template_name='index.html')),
+    re_path('app/', TemplateView.as_view(template_name='index.html'), name='app'),
+    path('login/', views.login, name='login'),
+    path('signup/', views.signup, name='signup'),
+    path('logout/', views.logout, name='logout'),
+
 ]
