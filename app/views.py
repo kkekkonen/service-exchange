@@ -89,7 +89,7 @@ def my_requests(request):
          'timestamp': r.timestamp,
          'description': r.description
         } for r in myRequests]
-        return JsonResponse({'count': len(myRequests), 'requests': response})
+        return JsonResponse(response, safe=False)
     else:
         return HttpResponse(statud=405)
 
@@ -107,7 +107,7 @@ def all_requests(request):
          'timestamp': r.timestamp,
          'description': r.description
         } for r in myRequests]
-        return JsonResponse({'count': len(myRequests), 'requests': response})
+        return JsonResponse(response, safe=False)
     else:
         return HttpResponse(statud=405)
 
@@ -118,7 +118,7 @@ def categories(request):
         response = [{'id': r.pk,
          'category': r.category,
         } for r in categories]
-        return JsonResponse({'count': len(categories), 'requests': response})
+        return JsonResponse(response, safe=False)
     else:
         return HttpResponse(statud=405)
 
