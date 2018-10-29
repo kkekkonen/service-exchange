@@ -9,7 +9,9 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import ConsumerMain from './views/ConsumerMain';
 import ConsumerServices from './views/consumer/Services';
 import Main from './views/Main';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import ResponsiveDrawer from './components/NavBar'
+import SXCustomTheme from './components/Theme';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core';
 
@@ -33,17 +35,19 @@ class App extends React.Component<IAppProps> {
   public render() {
     const { classes } = this.props;
     return (
-      <div className="App">
-        <ResponsiveDrawer title={this.findComponentTitle()} />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Switch>
-            <Route title="Home" exact path='/' component={Main}/>
-            <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
-            <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
-          </Switch>
-        </main>
-      </div>
+      <MuiThemeProvider theme={SXCustomTheme}>
+        <div className="App">
+          <ResponsiveDrawer title={this.findComponentTitle()} />
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Switch>
+              <Route title="Home" exact path='/' component={Main}/>
+              <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
+              <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
+            </Switch>
+          </main>
+        </div>
+      </MuiThemeProvider>
     );
   }
 
