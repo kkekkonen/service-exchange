@@ -75,52 +75,225 @@ def create_request(request):
     else:
         return HttpResponse(status=405)
 
+@csrf_exempt
+def create_service_offer(request):
+    if(request.method == "POST"):
+        try:
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            user = User.objects.get(pk=body['user'])
+            category = Category.objects.get(pk=body['category_id'])
+            serviceDict = {
+                'title': body['title'],
+                'provider': user,
+                'category': category,
+                'minPrice': body['minPrice'],
+                'maxPrice': body['maxPrice'],
+                'description': body['description'],
+                'zipcode': body['zipcode'],
+                'timestamp': datetime.now(),
+            }
+            service = ServiceOffer(**serviceDict)
+            service.save()
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse("invalid request", status=400)
+    else:
+        return HttpResponse(status=405)
+
 #@login_required
 @csrf_exempt
 def my_requests(request):
     if(request.method == "GET"):
         myRequests = Request.objects.filter(consumer=request.user).all()
-        response = [{'id': r.pk,
-         'name': r.title,
-         'minPrice': r.minPrice,
-         'maxPrice': r.maxPrice,
-         'category': r.category.category,
-         'zipcode': r.zipcode,
-         'timestamp': r.timestamp,
-         'description': r.description
+        response = [{
+            'id': r.pk,
+             'title': r.title,
+             'minPrice': r.minPrice,
+             'maxPrice': r.maxPrice,
+             'category': r.category.category,
+             'zipcode': r.zipcode,
+             'timestamp': r.timestamp,
+             'description': r.description
         } for r in myRequests]
         return JsonResponse(response, safe=False)
     else:
-        return HttpResponse(statud=405)
+        return HttpResponse(status=405)
 
 #@login_required
 @csrf_exempt
 def all_requests(request):
     if(request.method == "GET"):
-        myRequests = Request.objects.all()
-        response = [{'id': r.pk,
-         'name': r.title,
-         'minPrice': r.minPrice,
-         'maxPrice': r.maxPrice,
-         'category': r.category.category,
-         'zipcode': r.zipcode,
-         'timestamp': r.timestamp,
-         'description': r.description
-        } for r in myRequests]
+        Requests = Request.objects.all()
+        response = [{
+            'id': r.pk,
+            'title"': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'description': r.description,
+            'consumer': r.consumer
+        } for r in Requests]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def request(request, id):
+    if(request.method == "GET"):
+        Request = Request.objects.get_object_or_404(pk=id)
+        response = {
+            'id': r.pk,
+            'title"': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'description': r.description,
+            'consumer': r.consumer
+        } in Request
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def service(request, id):
+    if(request.method == "GET"):
+        Service = Service.objects.get_object_or_404(pk=id)
+        response = {
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'consumer': r.consumer,
+            'producer': r.producer,
+            'status': r.status,
+            'rating': r.rating,
+            'description': r.description
+        } in Service
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def all_service_offers(request):
+    if(request.method == "GET"):
+        ServiceOffers = ServiceOffer.objects.all()
+        response = [{
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'description': r.description,
+            'provider': r.provider
+        } for r in ServiceOffers]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def service_offer(request, id):
+    if(request.method == "GET"):
+        ServiceOffer = ServiceOffer.objects.get_object_or_404(pk=id)
+        response = {
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'description': r.description,
+            'provider': r.provider
+        } in ServiceOffer
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def my_service_offers(request):
+    if(request.method == "GET"):
+        ServiceOffers = ServiceOffer.objects.filter(provider=request.user)
+        response = [{
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'description': r.description,
+            'provider': r.provider
+        } for r in ServiceOffers]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def my_consumer_services(request):
+    if(request.method == "GET"):
+        Services = Service.objects.filter(consumer=request.user)
+        response = [{
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'consumer': r.consumer,
+            'producer': r.producer,
+            'status': r.status,
+            'rating': r.rating,
+            'description': r.description
+        } for r in Services]
         return JsonResponse(response, safe=False)
     else:
         return HttpResponse(statud=405)
 
+@csrf_exempt
+def my_provider_services(request):
+    if(request.method == "GET"):
+        Services = Service.objects.filter(provider=request.user)
+        response = [{
+            'id': r.pk,
+            'title': r.title,
+            'minPrice': r.minPrice,
+            'maxPrice': r.maxPrice,
+            'category': r.category.category,
+            'zipcode': r.zipcode,
+            'timestamp': r.timestamp,
+            'consumer': r.consumer,
+            'producer': r.producer,
+            'status': r.status,
+            'rating': r.rating,
+            'description': r.description
+        } for r in Services]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(statud=405)
+
+@csrf_exempt
 @login_required
 def categories(request):
     if(request.method == "GET"):
         categories = Category.objects.all()
-        response = [{'id': r.pk,
-         'category': r.category,
+        response = [{
+            'id': r.pk,
+            'category': r.category,
         } for r in categories]
         return JsonResponse(response, safe=False)
     else:
-        return HttpResponse(statud=405)
+        return HttpResponse(status=405)
 
 def logout(request):
     auth_logout(request)

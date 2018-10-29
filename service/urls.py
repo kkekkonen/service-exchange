@@ -30,4 +30,11 @@ urlpatterns = [
     path('api/my_requests', views.my_requests, name='my_request'),
     path('api/all_requests', views.all_requests, name='all_request'),
     path('api/categories', views.categories, name='categories'),
+    path('api/all_service_offers', views.all_service_offers, name='all_service_offers'),
+    path('api/my_provider_services', views.my_provider_services, name='my_provider_services'),
+    path('api/my_consumer_services', views.my_consumer_services, name='my_consumer_services'),
+    path('api/create_service_offer', views.create_service_offer, name='create_service_offer'),
+    path('api/request/<int:id>/', views.request),
+    path('api/service_offer/<int:id>/', views.service_offer),
+    path('api/service/<int:id>/', views.service),
 ]
