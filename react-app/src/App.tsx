@@ -12,6 +12,7 @@ import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
+import ServiceOffer from './views/consumer/ServiceOffer';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core';
 
@@ -44,6 +45,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Home" exact path='/' component={Main}/>
               <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
+              <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
             </Switch>
           </main>
         </div>
@@ -59,6 +61,8 @@ class App extends React.Component<IAppProps> {
         return 'Consumer main';
       case '/consumer/available_services':
         return 'Available services';
+      case '/consumer/serviceoffer/:id':
+        return 'Service offer';
       default:
         return 'Page not found';
     }

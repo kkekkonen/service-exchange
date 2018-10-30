@@ -204,7 +204,7 @@ def all_service_offers(request):
 @csrf_exempt
 def service_offer(request, id):
     if(request.method == "GET"):
-        ServiceOffer = ServiceOffer.objects.get_object_or_404(pk=id)
+        r = get_object_or_404(ServiceOffer, pk=id)
         response = {
             'id': r.pk,
             'title': r.title,
@@ -214,8 +214,8 @@ def service_offer(request, id):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider
-        } in ServiceOffer
+            'provider': r.provider.get_full_name()
+        }
         return JsonResponse(response, safe=False)
     else:
         return HttpResponse(status=405)

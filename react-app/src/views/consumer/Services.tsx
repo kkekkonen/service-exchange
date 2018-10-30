@@ -50,7 +50,7 @@ class ConsumerServices extends React.Component<IConsumerServicesProps, IState> {
           <Grid item xs={12}>
             <List>
             {this.state.serviceOffers.map(serviceOffer => (
-              <ListItem key={serviceOffer.id} dense button>
+              <ListItem key={serviceOffer.id} dense button component='a' href={`/app/#/consumer/serviceoffer/${serviceOffer.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
