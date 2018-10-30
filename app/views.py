@@ -195,7 +195,7 @@ def all_service_offers(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider
+            'provider': r.provider.get_full_name()
         } for r in ServiceOffers]
         return JsonResponse(response, safe=False)
     else:

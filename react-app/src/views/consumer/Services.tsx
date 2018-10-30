@@ -1,11 +1,11 @@
 import * as React from 'react';
 
+import {ICategory, IServiceOffer} from '../../models/models'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import {ICategory} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,12 +24,14 @@ interface IConsumerServicesProps extends WithStyles<typeof styles> {
 
 interface IState {
   categories: ICategory[];
+  serviceOffers: IServiceOffer[];
 };
 
 
 class ConsumerServices extends React.Component<IConsumerServicesProps, IState> {
   public state = {
     categories: [] as ICategory[],
+    serviceOffers: [] as IServiceOffer[]
   };
   private apiService: ApiService;
   public constructor(props: IConsumerServicesProps) {
@@ -38,6 +40,7 @@ class ConsumerServices extends React.Component<IConsumerServicesProps, IState> {
   }
   public componentDidMount(){
     this.apiService.getCategories().then(categories => this.setState({ categories }))
+    this.apiService.getAllServiceOffers().then(serviceOffers => this.setState({ serviceOffers }))
   }
   public render() {
     const { classes } = this.props;
@@ -46,20 +49,12 @@ class ConsumerServices extends React.Component<IConsumerServicesProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.categories.map(category => (
-              <ListItem key={category.id} dense button>
+            {this.state.serviceOffers.map(serviceOffer => (
+              <ListItem key={serviceOffer.id} dense button>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
-                <ListItemText primary={`Category item ${category.category + 1}`} secondary="Jan 9, 2014" />
-              </ListItem>
-            ))}
-            {[0, 1, 2, 3].map(value => (
-              <ListItem key={value} dense button>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-                <ListItemText primary={`Line item ${value + 1}`} secondary="Jan 9, 2014" />
+                <ListItemText primary={`${serviceOffer.title}`} secondary={serviceOffer.provider} />
               </ListItem>
             ))}
           </List>
