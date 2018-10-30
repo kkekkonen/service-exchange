@@ -22,6 +22,7 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
+            auth_login(request, user)
             return redirect('app')
         else:
             return render(request, 'signup.html', {'form': form})
@@ -258,7 +259,7 @@ def my_consumer_services(request):
         } for r in Services]
         return JsonResponse(response, safe=False)
     else:
-        return HttpResponse(statud=405)
+        return HttpResponse(status=405)
 
 @csrf_exempt
 def my_provider_services(request):
@@ -280,11 +281,13 @@ def my_provider_services(request):
         } for r in Services]
         return JsonResponse(response, safe=False)
     else:
-        return HttpResponse(statud=405)
+        return HttpResponse(status=405)
 
 @csrf_exempt
 @login_required
 def categories(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
     if(request.method == "GET"):
         categories = Category.objects.all()
         response = [{
