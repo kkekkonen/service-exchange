@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
+import Profile from './views/Profile';
 import ConsumerMain from './views/ConsumerMain';
 import ConsumerServices from './views/consumer/Services';
 import Main from './views/Main';
@@ -43,6 +44,7 @@ class App extends React.Component<IAppProps> {
             <div className={classes.toolbar} />
             <Switch>
               <Route title="Home" exact path='/' component={Main}/>
+              <Route title="Profile" exact path='/profile' component={Profile}/>
               <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
               <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
@@ -57,6 +59,8 @@ class App extends React.Component<IAppProps> {
     switch (this.context.router.route.location.pathname) {
       case '/':
         return 'Home';
+      case '/profile':
+        return 'Profile';
       case '/consumer':
         return 'Consumer main';
       case '/consumer/available_services':

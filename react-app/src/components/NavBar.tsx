@@ -87,7 +87,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
                 <ListItemIcon><HomeIcon /></ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component="a" href="#/profile">
                 <ListItemIcon><PersonIcon /></ListItemIcon>
                 <ListItemText primary="My profile" />
             </ListItem>
