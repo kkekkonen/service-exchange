@@ -30,6 +30,9 @@ def signup(request):
         form = SignupForm()
         return render(request, 'signup.html', {'form': form})
 
+def about(request):
+        return render(request, 'about.html')
+
 def login(request):
     if request.method == 'GET':
         form = AuthenticationForm(request)

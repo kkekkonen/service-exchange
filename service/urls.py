@@ -25,6 +25,7 @@ urlpatterns = [
     re_path('app/', TemplateView.as_view(template_name='index.html'), name='app'),
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
+    path('about/', views.about, name='about'),
     path('logout/', views.logout, name='logout'),
     path('api/create_request', views.create_request, name='create_request'),
     path('api/my_requests', views.my_requests, name='my_request'),
