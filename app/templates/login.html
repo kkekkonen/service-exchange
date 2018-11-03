@@ -2,12 +2,27 @@
 {% block content %}
 <div class="row">
   <h2>Login</h2>
+
+  {% if result_message %}
+
+  <div class="row">
+    <div class="card red darken-2">
+        <div class="card-content white-text">
+            <p>{{ result_message }}</p>
+        </div>
+    </div>
+  </div>
+  
+  {% endif %}
+
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button class="btn" type="submit">Login</button>
   </form>
 </div>
+
+
 <div class="row">
     {% url 'signup' as signup_url %}
     Not user yet? <a class="" href="{{ signup_url }}">Register</a>

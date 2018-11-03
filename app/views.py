@@ -49,7 +49,12 @@ def login(request):
             auth_login(request, user)
             return redirect('app')
         else:
-            context = {'result_message': 'Invalid login! Please try again.'}
+            form = AuthenticationForm(request)
+            context = {
+                'title': 'login',
+                'form': form,
+                'result_message': 'Invalid login! Please try again.'
+            }
             return render(request, 'login.html', context)
 
 #@login_required
