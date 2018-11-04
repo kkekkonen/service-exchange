@@ -5,11 +5,13 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+      height: '100%'
     }
 });
 
@@ -20,17 +22,22 @@ class Main extends React.Component<IMainProps> {
   public render() {
     const { classes } = this.props;
     return (
-      <div className="Main">
-        <Grid className={classes.root} container spacing={16}>
-          <Grid item xs={12}>
-            Choose your role.
+      <div className={classes.root}>
+        <Grid className={classes.root} container spacing={16} direction="column" justify="center" alignItems="center">
+          <Grid item>
+            <Typography variant="h4" gutterBottom align="center">
+              Welcome to our platform
+            </Typography>
+            <Typography variant="body1" gutterBottom align="center">
+              Begin by choosing your role. You can always switch it from the side menu.
+            </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item>
             <Button href="#/consumer" variant="contained" color="primary" className="button">
               I need something
             </Button>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item>
             <Button href="#/consumer" variant="contained" color="primary" className="button">
               I provide something
             </Button>
