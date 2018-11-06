@@ -38,7 +38,19 @@ export interface IUserProfile
     email: string
     description: string,
     consumer: string,
+    pending: number,
     isOwner: boolean
+}
+
+export interface IServiceRequestOffer
+{
+    id: number,
+    title: string,
+    price: number,
+    status: string,
+    timestamp: string,
+    description: string,
+    requestId: number
 }
 
 export interface IService

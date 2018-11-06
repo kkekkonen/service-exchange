@@ -1,4 +1,4 @@
-import {ICategory, IService, IServiceOffer, IServiceRequest, IUserProfile} from '../models/models'
+import {ICategory, IService, IServiceOffer, IServiceRequest, IUserProfile, IServiceRequestOffer} from '../models/models'
 
 export class ApiService {
     private readonly baseUrl = "/";
@@ -69,6 +69,11 @@ export class ApiService {
         return fetch(this.baseUrl + 'api/user_profile/' + id, {
             credentials: "same-origin"
         }).then(res => res.json() as unknown as IUserProfile)
+
+    public getOffersForRequest = (id: number) => {
+        return fetch(this.baseUrl + 'api/get_request_offers/' + id, {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IServiceRequestOffer[])
     }
 
     public logoutLoggedUser = () => {
