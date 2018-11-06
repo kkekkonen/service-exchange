@@ -461,6 +461,40 @@ def decline_offer(request, id):
     offer.status = OfferStatus.REJECTED
     return HttpResponse(status=200)
 
+@csrf_exempt
+@login_required
+def logged_user_profile(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    if (request.method == "GET"):
+        user = request.user
+        response = {
+            'id': user.id,
+            'username': user.username,
+            'firstName': user.first_name,
+            'lastName': user.last_name,
+            'email': user.email,
+        }
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def user_profile(request, id):
+    if (request.method == "GET"):
+        user = User.objects.get(pk=id)
+        response = {
+            'id': user.pk,
+            'username': user.username,
+            'firstName': user.first_name,
+            'lastName': user.last_name,
+            'email': user.email,
+        }
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
 def logout(request):
     auth_logout(request)
     return redirect('landing')

@@ -29,6 +29,27 @@ export interface IServiceRequest
     description: string,
     consumer: string,
     isOwner: boolean
+    pending: number,
+}
+
+export interface IUserProfile
+{
+    id: number,
+    username: string,
+    firstName: string,
+    lastName: string,
+    email: string
+}
+
+export interface IServiceRequestOffer
+{
+    id: number,
+    title: string,
+    price: number,
+    status: string,
+    timestamp: string,
+    description: string,
+    requestId: number
 }
 
 export interface IService
