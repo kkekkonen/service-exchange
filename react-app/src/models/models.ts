@@ -29,7 +29,7 @@ export interface IServiceRequest
     description: string,
     consumer: string,
     isOwner: boolean
-
+    pending: number,
 }
 
 export interface IUserProfile
