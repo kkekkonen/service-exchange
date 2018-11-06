@@ -152,7 +152,7 @@ def all_requests(request):
 @csrf_exempt
 def request(request, id):
     if(request.method == "GET"):
-        Request = Request.objects.get_object_or_404(pk=id)
+        r = get_object_or_404(Request, pk=id)
         response = {
             'id': r.pk,
             'title"': r.title,
@@ -162,8 +162,9 @@ def request(request, id):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'consumer': r.consumer
-        } in Request
+            'consumer': r.consumer.get_full_name(),
+            'isOwner': r.consumer.pk == request.user.pk
+        }
         return JsonResponse(response, safe=False)
     else:
         return HttpResponse(status=405)
@@ -171,7 +172,7 @@ def request(request, id):
 @csrf_exempt
 def service(request, id):
     if(request.method == "GET"):
-        Service = Service.objects.get_object_or_404(pk=id)
+        r = get_object_or_404(Service, pk=id)
         response = {
             'id': r.pk,
             'title': r.title,
@@ -180,12 +181,12 @@ def service(request, id):
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
-            'consumer': r.consumer,
-            'producer': r.producer,
+            'consumer': r.consumer.get_full_name(),
+            'producer': r.producer.get_full_name(),
             'status': r.status,
             'rating': r.rating,
             'description': r.description
-        } in Service
+        }
         return JsonResponse(response, safe=False)
     else:
         return HttpResponse(status=405)

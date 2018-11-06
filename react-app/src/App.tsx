@@ -16,6 +16,7 @@ import Profile from './views/Profile';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
 import ServiceOffer from './views/consumer/ServiceOffer';
+import ServiceRequest from './views/consumer/ServiceRequest';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core';
 
@@ -51,6 +52,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
               <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
               <Route title="My requests" path='/consumer/my_requests' component={MyRequests}/>
+              <Route title="Request" path='/request/:id' component={ServiceRequest}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
             </Switch>
           </main>
