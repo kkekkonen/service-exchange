@@ -15,10 +15,10 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IConsumerMainProps extends WithStyles<typeof styles> {
+interface IProviderMainProps extends WithStyles<typeof styles> {
 }
 
-class ConsumerMain extends React.Component<IConsumerMainProps> {
+class ProviderMain extends React.Component<IProviderMainProps> {
   public render() {
     const { classes } = this.props;
     return (
@@ -26,17 +26,27 @@ class ConsumerMain extends React.Component<IConsumerMainProps> {
         <Grid className={classes.root} container spacing={16} direction="column" justify="center" alignItems="center">
           <Grid item>
             <Typography variant="h4" gutterBottom align="center">
-              I need something
+              I can provide something
             </Typography>
           </Grid>
           <Grid item>
-            <Button href="#/consumer/available_services" variant="contained" color="primary" className="button">
-              Available services
+            <Button href="#/provider/open_requests" variant="contained" color="primary" className="button">
+              Open requests
             </Button>
           </Grid>
           <Grid item>
-            <Button href="#/consumer/my_requests" variant="contained" color="primary" className="button">
-              My requests
+            <Button href="#/provider/my_service_offers" variant="contained" color="primary" className="button">
+              My services
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button href="#/provider/my_offers" variant="contained" color="primary" className="button">
+              My offers
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button href="#/provider/accepted_services" variant="contained" color="primary" className="button">
+              Accepted services
             </Button>
           </Grid>
         </Grid>
@@ -45,4 +55,4 @@ class ConsumerMain extends React.Component<IConsumerMainProps> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ConsumerMain);
+export default withStyles(styles, { withTheme: true })(ProviderMain);

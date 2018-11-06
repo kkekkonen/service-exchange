@@ -15,10 +15,10 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IMainProps extends WithStyles<typeof styles> {
+interface IConsumerMainProps extends WithStyles<typeof styles> {
 }
 
-class Main extends React.Component<IMainProps> {
+class ConsumerMain extends React.Component<IConsumerMainProps> {
   public render() {
     const { classes } = this.props;
     return (
@@ -26,20 +26,22 @@ class Main extends React.Component<IMainProps> {
         <Grid className={classes.root} container spacing={16} direction="column" justify="center" alignItems="center">
           <Grid item>
             <Typography variant="h4" gutterBottom align="center">
-              Welcome to our platform
-            </Typography>
-            <Typography variant="body1" gutterBottom align="center">
-              Begin by choosing your role. You can always switch it from the side menu.
+              I need something
             </Typography>
           </Grid>
           <Grid item>
-            <Button href="#/consumer" variant="contained" color="primary" className="button">
-              I need something
+            <Button href="#/consumer/available_services" variant="contained" color="primary" className="button">
+              Available services
             </Button>
           </Grid>
           <Grid item>
-            <Button href="#/provider" variant="contained" color="primary" className="button">
-              I can provide something
+            <Button href="#/consumer/my_requests" variant="contained" color="primary" className="button">
+              My requests
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button href="#/consumer/accepted_services" variant="contained" color="primary" className="button">
+              Accepted services
             </Button>
           </Grid>
         </Grid>
@@ -48,4 +50,4 @@ class Main extends React.Component<IMainProps> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Main);
+export default withStyles(styles, { withTheme: true })(ConsumerMain);

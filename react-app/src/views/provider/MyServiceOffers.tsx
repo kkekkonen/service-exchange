@@ -7,7 +7,7 @@ import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {IServiceRequest} from '../../models/models'
+import {IServiceOffer} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,25 +27,25 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IMyRequestsProps extends WithStyles<typeof styles> {
+interface IMyServiceOffersProps extends WithStyles<typeof styles> {
 }
 
 interface IState {
-  myRequests: IServiceRequest[];
+  myServiceOffers: IServiceOffer[];
 };
 
 
-class MyRequests extends React.Component<IMyRequestsProps, IState> {
+class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
   public state = {
-    myRequests: [] as IServiceRequest[]
+    myServiceOffers: [] as IServiceOffer[]
   };
   private apiService: ApiService;
-  public constructor(props: IMyRequestsProps) {
+  public constructor(props: IMyServiceOffersProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyRequests().then(myRequests => this.setState({ myRequests }))
+    this.apiService.getMyServiceOffers().then(myServiceOffers => this.setState({ myServiceOffers }))
   }
   public render() {
     const { classes } = this.props;
@@ -54,21 +54,21 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.myRequests.length === 0 &&
+              {this.state.myServiceOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
-                You do not yet have any requests. Why not create one now if you need a service?
+                You do not yet have any service offers. Why not create one now if you have something you can provide?
               </Typography>
-            }
-            {this.state.myRequests.map(request => (
-              <ListItem key={request.id} dense button component='a' href={`/app/#/request/${request.id}`}>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-                <ListItemText primary={`${request.title}`} />
-              </ListItem>
-            ))}
-          </List>
-          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/consumer/create_request"}>
+              }
+              {this.state.myServiceOffers.map(serviceOffer => (
+                <ListItem key={serviceOffer.id} dense button component='a' href={`/app/#/consumer/service_offer/${serviceOffer.id}`}>
+                  <Avatar>
+                    <ImageIcon />
+                  </Avatar>
+                  <ListItemText primary={`${serviceOffer.title}`} />
+                </ListItem>
+              ))}
+            </List>
+          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/provider/create_service_offer"}>
             <AddIcon />
           </Button>
           </Grid>
@@ -78,4 +78,4 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MyRequests);
+export default withStyles(styles, { withTheme: true })(MyServiceOffers);

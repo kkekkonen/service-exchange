@@ -2,10 +2,8 @@ import * as React from 'react';
 
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
@@ -13,39 +11,33 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-    },
-    fab: {
-      position: 'absolute',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2,
     }
 });
 
-interface IMyRequestsProps extends WithStyles<typeof styles> {
+interface IRequestsProps extends WithStyles<typeof styles> {
 }
 
 interface IState {
-  myRequests: IServiceRequest[];
+  serviceRequests: IServiceRequest[];
 };
 
 
-class MyRequests extends React.Component<IMyRequestsProps, IState> {
+class Requests extends React.Component<IRequestsProps, IState> {
   public state = {
-    myRequests: [] as IServiceRequest[]
+    serviceRequests: [] as IServiceRequest[]
   };
   private apiService: ApiService;
-  public constructor(props: IMyRequestsProps) {
+  public constructor(props: IRequestsProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyRequests().then(myRequests => this.setState({ myRequests }))
+    this.apiService.getAllServiceRequests().then(serviceRequests => this.setState({ serviceRequests }))
   }
   public render() {
     const { classes } = this.props;
@@ -54,23 +46,15 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.myRequests.length === 0 &&
-              <Typography variant="body1" gutterBottom>
-                You do not yet have any requests. Why not create one now if you need a service?
-              </Typography>
-            }
-            {this.state.myRequests.map(request => (
+            {this.state.serviceRequests.map(request => (
               <ListItem key={request.id} dense button component='a' href={`/app/#/request/${request.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
-                <ListItemText primary={`${request.title}`} />
+                <ListItemText primary={`${request.title}`} secondary={"TODO"} />
               </ListItem>
             ))}
           </List>
-          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/consumer/create_request"}>
-            <AddIcon />
-          </Button>
           </Grid>
         </Grid>
       </div>
@@ -78,4 +62,4 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MyRequests);
+export default withStyles(styles, { withTheme: true })(Requests);

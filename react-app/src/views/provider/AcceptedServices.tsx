@@ -2,12 +2,10 @@ import * as React from 'react';
 
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {IServiceRequest} from '../../models/models'
+import {IService} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -19,33 +17,28 @@ import { createStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-    },
-    fab: {
-      position: 'absolute',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2,
     }
 });
 
-interface IMyRequestsProps extends WithStyles<typeof styles> {
+interface IProviderAcceptedServicesProps extends WithStyles<typeof styles> {
 }
 
 interface IState {
-  myRequests: IServiceRequest[];
+  services: IService[];
 };
 
 
-class MyRequests extends React.Component<IMyRequestsProps, IState> {
+class ProviderAcceptedServices extends React.Component<IProviderAcceptedServicesProps, IState> {
   public state = {
-    myRequests: [] as IServiceRequest[]
+    services: [] as IService[]
   };
   private apiService: ApiService;
-  public constructor(props: IMyRequestsProps) {
+  public constructor(props: IProviderAcceptedServicesProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyRequests().then(myRequests => this.setState({ myRequests }))
+    this.apiService.getMyProviderServices().then(services => this.setState({ services }))
   }
   public render() {
     const { classes } = this.props;
@@ -54,23 +47,20 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.myRequests.length === 0 &&
+            {this.state.services.length === 0 &&
               <Typography variant="body1" gutterBottom>
-                You do not yet have any requests. Why not create one now if you need a service?
+                You do not have yet any accepted services (no accepted deals from consumers).
               </Typography>
             }
-            {this.state.myRequests.map(request => (
-              <ListItem key={request.id} dense button component='a' href={`/app/#/request/${request.id}`}>
+            {this.state.services.map(service => (
+              <ListItem key={service.id} dense button component='a' href={`/app/#/service/${service.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
-                <ListItemText primary={`${request.title}`} />
+                <ListItemText primary={`${service.title}`} secondary={service.consumer} />
               </ListItem>
             ))}
           </List>
-          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/consumer/create_request"}>
-            <AddIcon />
-          </Button>
           </Grid>
         </Grid>
       </div>
@@ -78,4 +68,4 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MyRequests);
+export default withStyles(styles, { withTheme: true })(ProviderAcceptedServices);

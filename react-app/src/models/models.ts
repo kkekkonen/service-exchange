@@ -36,4 +36,23 @@ export interface IUserProfile
     firstName: string,
     lastName: string,
     email: string
+    description: string,
+    consumer: string,
+    isOwner: boolean
+}
+
+export interface IService
+{
+    id: number,
+    producer: string,
+    consumer: string,
+    status: string,
+    zipcode: number,
+    title: string,
+    timestamp: string,
+    description: string,
+    minPrice: number,
+    maxPrice: number,
+    category: string,
+    rating: number
 }
