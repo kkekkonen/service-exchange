@@ -3,17 +3,25 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import {IServiceOffer} from '../../models/models'
-import ImageIcon from '@material-ui/icons/Image';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+    },
+    field: {
+      marginBottom: "10px"
+    },
+    fieldUpper: {
+      fontWeight: "bold"
+    },
+    fieldLower: {
+
     }
 });
 
@@ -44,16 +52,36 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
       <div>
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12} container >
-            <Grid item xs={6}>
-            <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              {this.state.serviceOffer.title}
-              {this.state.serviceOffer.category}
-              {this.state.serviceOffer.zipcode}
-              {this.state.serviceOffer.timestamp}
+          <Grid item md={6} xs={12}>
+              <Typography variant="h4" gutterBottom>
+                {this.state.serviceOffer.title}
+              </Typography>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Category
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceOffer.category}
+                </div>
+              </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Zip code
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceOffer.zipcode}
+                </div>
+              </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Created on
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceOffer.timestamp}
+                </div>
+              </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 <Grid item xs={12}>
                   {this.state.serviceOffer.provider}

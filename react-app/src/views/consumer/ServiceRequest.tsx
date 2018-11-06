@@ -22,6 +22,15 @@ import { createStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+    },
+    field: {
+      marginBottom: "10px"
+    },
+    fieldUpper: {
+      fontWeight: "bold"
+    },
+    fieldLower: {
+
     }
 });
 
@@ -55,19 +64,39 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
       <div>
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12} container >
-            <Grid item xs={6}>
-            <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              {this.state.serviceRequest.title}
-              {this.state.serviceRequest.category}
-              {this.state.serviceRequest.zipcode}
-              {this.state.serviceRequest.timestamp}
+            <Grid item md={6} xs={12}>
+              <Typography variant="h4" gutterBottom>
+                {this.state.serviceRequest.title}
+              </Typography>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Category
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceRequest.category}
+                </div>
+              </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Zip code
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceRequest.zipcode}
+                </div>
+              </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Created on
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceRequest.timestamp}
+                </div>
+              </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 {!this.state.serviceRequest.isOwner &&
-                <Grid container>
+                <Grid container spacing={16}>
                   <Grid item xs={12}>
                     <Button href="#/todo" variant="contained" color="secondary" className="button">
                       View profile
@@ -94,6 +123,9 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
             {this.state.serviceRequest.description}
           </Grid>
           <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            Offers
+          </Typography>
           <List>
               {this.state.requestOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
@@ -105,7 +137,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
                   <Avatar>
                     <ImageIcon />
                   </Avatar>
-                  <ListItemText primary={`${offer.title}`} />
+                  <ListItemText primary={`${offer.price}€`} secondary={offer.provider}/>
                   <ListItemSecondaryAction>
                       <IconButton aria-label="Delete">
                         <CancelIcon />

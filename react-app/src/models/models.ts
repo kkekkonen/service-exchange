@@ -44,12 +44,12 @@ export interface IUserProfile
 export interface IServiceRequestOffer
 {
     id: number,
-    title: string,
     price: number,
     status: string,
     timestamp: string,
     description: string,
-    requestId: number
+    requestId: number,
+    provider: string
 }
 
 export interface IService

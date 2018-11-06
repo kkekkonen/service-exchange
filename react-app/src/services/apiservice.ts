@@ -1,4 +1,4 @@
-import {ICategory, IService, IServiceOffer, IServiceRequest, IUserProfile, IServiceRequestOffer} from '../models/models'
+import {ICategory, IService, IServiceOffer, IServiceRequest, IServiceRequestOffer, IUserProfile} from '../models/models'
 
 export class ApiService {
     private readonly baseUrl = "/";
