@@ -16,3 +16,15 @@ export interface IServiceOffer
     maxPrice: number,
     category: string
 }
+
+export interface IServiceRequest
+{
+    id: number,
+    title: string,
+    minPrice: number,
+    maxPrice: number,
+    category: string,
+    zipcode: number,
+    timestamp: string,
+    description: string
+}

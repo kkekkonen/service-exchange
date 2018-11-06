@@ -2,14 +2,12 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "object-literal-sort-keys": false,
-    "named-imports-order": "any",
     "ordered-imports": false,
     "jsx-boolean-value": false,
     "no-console": false
   },
   "jsRules":{
     "object-literal-sort-keys": false,
-    "named-imports-order": "any",
     "ordered-imports": false,
     "jsx-boolean-value": false
   },
