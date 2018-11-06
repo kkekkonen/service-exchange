@@ -51,7 +51,7 @@ class Requests extends React.Component<IRequestsProps, IState> {
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
-                <ListItemText primary={`${request.title}`} secondary={"TODO"} />
+                <ListItemText primary={`${request.title}`} secondary={request.consumer} />
               </ListItem>
             ))}
           </List>
