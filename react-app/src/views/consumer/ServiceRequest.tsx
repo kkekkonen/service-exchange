@@ -94,6 +94,9 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
             {this.state.serviceRequest.description}
           </Grid>
           <Grid item xs={12}>
+          <Typography variant="h4" gutterBottom>
+            Offers
+          </Typography>
           <List>
               {this.state.requestOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
@@ -105,7 +108,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
                   <Avatar>
                     <ImageIcon />
                   </Avatar>
-                  <ListItemText primary={`${offer.title}`} />
+                  <ListItemText primary={`${offer.price}€ - ${offer.provider}`} />
                   <ListItemSecondaryAction>
                       <IconButton aria-label="Delete">
                         <CancelIcon />

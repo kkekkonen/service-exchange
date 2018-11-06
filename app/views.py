@@ -114,7 +114,7 @@ def create_service_offer(request):
 def count_pending(offers):
     pending = 0
     for offer in offers:
-        if offer.status == "Pending":
+        if offer.status == OfferStatus.PENDING:
             pending += 1
     return pending
 
@@ -346,11 +346,11 @@ def offers(request, id):
         offers = get_object_or_404(Request, pk=id).offers.all()
         response = [{
              'id': r.pk,
-             'title': r.title,
-             'price': r.minPrice,
-             'status': r.status,
+             'price': r.price,
+             'status': str(r.status),
              'timestamp': r.timestamp,
              'description': r.description,
+             'provider': r.provider.get_full_name(),
              'requestId': r.request.pk
         } for r in offers]
         return JsonResponse(response, safe=False)
