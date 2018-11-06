@@ -16,6 +16,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import RoomServiceIcon from '@material-ui/icons/RoomService';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
@@ -82,6 +83,10 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
     public handleDrawerToggle = () => {
       this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
+
+    public handleLogoutButton = () => {
+      // TODO
+    }
   
     public render() {
       const { classes } = this.props;
@@ -130,6 +135,13 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
             <ListItem button>
                 <ListItemIcon><SupervisorAccount /></ListItemIcon>
                 <ListItemText primary="My offers" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem button onClick={this.handleLogoutButton}>
+                <ListItemIcon><ExitToApp /></ListItemIcon>
+                <ListItemText>Logout</ListItemText>
             </ListItem>
           </List>
         </div>
