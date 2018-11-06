@@ -145,14 +145,14 @@ def all_requests(request):
         Requests = Request.objects.all()
         response = [{
             'id': r.pk,
-            'title"': r.title,
+            'title': r.title,
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'consumer': r.consumer
+            'consumer': r.consumer.get_full_name()
         } for r in Requests]
         return JsonResponse(response, safe=False)
     else:
@@ -164,7 +164,7 @@ def request(request, id):
         r = get_object_or_404(Request, pk=id)
         response = {
             'id': r.pk,
-            'title"': r.title,
+            'title': r.title,
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,

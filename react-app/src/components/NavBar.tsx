@@ -6,6 +6,7 @@ import {ApiService} from '../services/apiservice'
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Drawer from '@material-ui/core/Drawer';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import FeedbackIcon from '@material-ui/icons/Feedback';
@@ -127,11 +128,15 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
                 <ListItemIcon><FeedbackIcon /></ListItemIcon>
                 <ListItemText primary="My requests" />
             </ListItem>
+            <ListItem button component="a" href="#/consumer/accepted_services">
+                <ListItemIcon><DoneAllIcon /></ListItemIcon>
+                <ListItemText primary="Accepted services" />
+            </ListItem>
           </List>
           <Divider />
           <List>
             <ListSubheader component="div">I provide something</ListSubheader>
-            <ListItem button>
+            <ListItem button component="a" href="#/provider/open_requests">
                 <ListItemIcon><FeedbackIcon /></ListItemIcon>
                 <ListItemText primary="Open requests" />
             </ListItem>
@@ -142,6 +147,10 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
             <ListItem button>
                 <ListItemIcon><SupervisorAccount /></ListItemIcon>
                 <ListItemText primary="My offers" />
+            </ListItem>
+            <ListItem button component="a" href="#/provider/accepted_services">
+                <ListItemIcon><DoneAllIcon /></ListItemIcon>
+                <ListItemText primary="Accepted services" />
             </ListItem>
           </List>
           <Divider />

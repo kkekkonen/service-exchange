@@ -1,4 +1,4 @@
-import {ICategory, IServiceOffer, IServiceRequest} from '../models/models'
+import {ICategory, IService, IServiceOffer, IServiceRequest} from '../models/models'
 
 export class ApiService {
     private readonly baseUrl = "/";
@@ -17,10 +17,28 @@ export class ApiService {
         }).then(res => res.json() as unknown as IServiceOffer[])
     }
 
+    public getAllServiceRequests = () => {
+        return fetch(this.baseUrl + 'api/all_requests', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IServiceRequest[])
+    }
+
     public getMyServiceOffers = () => {
         return fetch(this.baseUrl + 'api/my_service_offers', {
             credentials: "same-origin"
         }).then(res => res.json() as unknown as IServiceOffer[])
+    }
+
+    public getMyConsumerServices = () => {
+        return fetch(this.baseUrl + 'api/my_consumer_services', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IService[])
+    }
+
+    public getMyProviderServices = () => {
+        return fetch(this.baseUrl + 'api/my_provider_services', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IService[])
     }
 
     public getServiceOffer = (id: number) => {
