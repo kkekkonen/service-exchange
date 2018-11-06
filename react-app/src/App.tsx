@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import ConsumerAcceptedServices from './views/consumer/AcceptedServices';
-import ConsumerMain from './views/ConsumerMain';
+import ConsumerMain from './views/consumer/ConsumerMain';
 import ConsumerServices from './views/consumer/Services';
 import CreateNewRequest from './views/consumer/CreateNewRequest';
 import Main from './views/Main';
@@ -16,6 +16,7 @@ import MyRequests from './views/consumer/MyRequests';
 import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
 import ProviderAcceptedServices from './views/provider/AcceptedServices';
+import ProviderMain from './views/provider/ProviderMain';
 import Requests from './views/provider/Requests';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
@@ -53,6 +54,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Home" exact path='/' component={Main}/>
               <Route title="Profile" exact path='/profile' component={Profile}/>
               <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
+              <Route title="I provide something"exact path='/provider' component={ProviderMain}/>
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
               <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
               <Route title="My requests" path='/consumer/my_requests' component={MyRequests}/>
@@ -76,7 +78,7 @@ class App extends React.Component<IAppProps> {
       case '/profile':
         return 'Profile';
       case '/consumer':
-        return 'Consumer main';
+        return 'I need something';
       case '/consumer/available_services':
         return 'Available services';
       case '/consumer/my_requests':
@@ -87,6 +89,8 @@ class App extends React.Component<IAppProps> {
         return 'Create new request';
       case '/consumer/serviceoffer/:id':
         return 'Service offer';
+      case '/provider':
+        return 'I provide something';
       case '/provider/my_service_offers':
         return 'My service offers';
       case '/provider/accepted_services':
