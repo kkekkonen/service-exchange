@@ -49,8 +49,13 @@ const styles = (theme: Theme) =>
     },
   },
   toolbar: theme.mixins.toolbar,
+  center: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   logo: {
-
+    margin: 0
   },
   drawerPaper: {
     width: drawerWidth,
@@ -83,7 +88,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
   
       const drawer = (
         <div>
-          <div className={classes.toolbar}>
+          <div className={classes.toolbar + ' ' + classes.center}>
             <Typography className={classes.logo} variant="h4" gutterBottom align="center">
               Favor.io
             </Typography>
