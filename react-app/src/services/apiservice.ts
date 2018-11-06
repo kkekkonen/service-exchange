@@ -42,4 +42,18 @@ export class ApiService {
 
     }
 
+    public createServiceRequest = (title: string) => {
+        return fetch(this.baseUrl + 'api/create_request', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": 1,
+                "minPrice": 1,
+                "maxPrice": 2,
+                "description": "test",
+                "zipcode": 12345
+            })
+        }).then(res => res.ok)
+    }
 }
