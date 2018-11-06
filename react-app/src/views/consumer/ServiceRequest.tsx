@@ -137,7 +137,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
                   <Avatar>
                     <ImageIcon />
                   </Avatar>
-                  <ListItemText primary={`${offer.price}€ - ${offer.provider}`} />
+                  <ListItemText primary={`${offer.price}€`} secondary={offer.provider}/>
                   <ListItemSecondaryAction>
                       <IconButton aria-label="Delete">
                         <CancelIcon />
