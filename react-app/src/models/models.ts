@@ -28,3 +28,12 @@ export interface IServiceRequest
     timestamp: string,
     description: string
 }
+
+export interface IUserProfile
+{
+    id: number,
+    username: string,
+    firstName: string,
+    lastName: string,
+    email: string
+}
