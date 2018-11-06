@@ -11,6 +11,7 @@ import {IServiceRequest} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
@@ -65,6 +66,9 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
                   <ImageIcon />
                 </Avatar>
                 <ListItemText primary={`${request.title}`} />
+                <ListItemSecondaryAction>
+                  {request.pending > 0 && <em>{request.pending}</em>}
+                </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>

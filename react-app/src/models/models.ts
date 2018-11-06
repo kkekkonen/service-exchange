@@ -41,6 +41,17 @@ export interface IUserProfile
     email: string
 }
 
+export interface IServiceRequestOffer
+{
+    id: number,
+    title: string,
+    price: number,
+    status: string,
+    timestamp: string,
+    description: string,
+    requestId: number
+}
+
 export interface IService
 {
     id: number,
