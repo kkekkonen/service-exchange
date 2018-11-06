@@ -384,11 +384,11 @@ def create_offer(request):
         try:
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
-            request = get_object_or_404(Request, pk=body['id'])
+            r = get_object_or_404(Request, pk=body['id'])
             offerDict = {
                 'provider': request.user,
                 'status': 'pending',
-                'request': request,
+                'request': r,
                 'price': body['price'],
                 'description': body['description'],
                 'timestamp': datetime.now()
@@ -400,6 +400,66 @@ def create_offer(request):
             return HttpResponse("invalid request", status=400)
     else:
         return HttpResponse(status=405)
+
+def accept_offer(request, id):
+    '''this function is used to accept offers made by providers. It is accepted by the requests consumer'''
+    offer = get_object_or_404(Offer, pk=id)
+    try:
+        r = offer.request
+        if request.user is not r.consumer:
+            return HttpResponse(status=403)
+        serviceDict = {
+            'title': r.title,
+            'consumer': r.consumer,
+            'provider': offer.provider,
+            'status': 'pending',
+            'price': offer.price,
+            'description': r.price,
+            'category': r.category,
+            'zipcode': r.zipcode,
+            'status': ServiceStatus.PENDING,
+            'rating': 0,                          #ignore rating until status is COMPLETED
+            'timestamp': datetime.now()
+        }
+        service = Service(**serviceDict)
+        service.save()
+        offer.delete()
+        r.delete()
+    except Exception as e:
+        return HttpResponse("invalid request", status=400)
+    return HttpResponse(status=200)
+
+def accept_service_offer(request, id):
+    '''this function is used to accept offers made by providers.
+    It is accepted by the consumer who made the request'''
+    serviceOffer = get_object_or_404(ServiceOffer, pk=id)
+    try:
+        serviceDict = {
+            'title': serviceOffer.title,
+            'consumer': request.user,
+            'provider': serviceOffer.provider,
+            'status': 'pending',
+            'price': serviceOffer.minPrice,
+            'description': serviceOffer.price,
+            'category': serviceOffer.category,
+            'zipcode': serviceOffer.zipcode,
+            'status': ServiceStatus.PENDING,
+            'rating': 0,                          #ignore rating until status is COMPLETED
+            'timestamp': datetime.now()
+        }
+        service = Service(**serviceDict)
+        service.save()
+        serviceOffer.delete()
+    except Exception as e:
+        return HttpResponse("invalid request", status=400)
+    return HttpResponse(status=200)
+
+def decline_offer(request, id):
+    offer = get_object_or_404(Offer, pk=body['id'])
+    if request.user is not offer.request.consumer:
+        return HttpResponse(status=403)
+    offer.status = OfferStatus.REJECTED
+    return HttpResponse(status=200)
 
 def logout(request):
     auth_logout(request)
