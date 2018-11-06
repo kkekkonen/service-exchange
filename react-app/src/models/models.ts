@@ -27,5 +27,6 @@ export interface IServiceRequest
     zipcode: number,
     timestamp: string,
     description: string,
+    consumer: string,
     isOwner: boolean
 }
