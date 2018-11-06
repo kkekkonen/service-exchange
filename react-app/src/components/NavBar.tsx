@@ -144,7 +144,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
                 <ListItemIcon><RoomServiceIcon /></ListItemIcon>
                 <ListItemText primary="My services" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component="a" href="#/provider/my_offers">
                 <ListItemIcon><SupervisorAccount /></ListItemIcon>
                 <ListItemText primary="My offers" />
             </ListItem>

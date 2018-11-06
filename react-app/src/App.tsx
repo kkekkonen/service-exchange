@@ -12,6 +12,7 @@ import ConsumerServices from './views/consumer/Services';
 import CreateNewRequest from './views/consumer/CreateNewRequest';
 import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import MyOffers from './views/provider/MyOffers';
 import MyRequests from './views/consumer/MyRequests';
 import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
@@ -63,6 +64,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Request" path='/request/:id' component={ServiceRequest}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
               <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
+              <Route title="My offers" path='/provider/my_offers' component={MyOffers}/>
               <Route title="Open requests" path='/provider/open_requests' component={Requests}/>
             </Switch>
           </main>
@@ -93,6 +95,8 @@ class App extends React.Component<IAppProps> {
         return 'I provide something';
       case '/provider/my_service_offers':
         return 'My service offers';
+      case '/provider/my_offers':
+        return 'My offers';
       case '/provider/accepted_services':
         return 'My accepted services';
       case '/provider/open_requests':

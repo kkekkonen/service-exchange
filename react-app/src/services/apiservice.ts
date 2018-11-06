@@ -59,6 +59,12 @@ export class ApiService {
         }).then(res => res.json() as unknown as IServiceRequest[])
     }
 
+    public getMyServiceRequestOffers = () => {
+        return fetch(this.baseUrl + 'api/get_offers', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IServiceRequestOffer[])
+    }
+
     public getLoggedUserProfile = () => {
         return fetch(this.baseUrl + 'api/logged_user_profile', {
             credentials: "same-origin"
