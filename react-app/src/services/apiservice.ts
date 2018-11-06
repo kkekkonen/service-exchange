@@ -28,4 +28,18 @@ export class ApiService {
             credentials: "same-origin"
         }).then(res => res.json() as unknown as IServiceRequest[])
     }
+
+    public logoutLoggedUser = () => {
+        return fetch(this.baseUrl + 'logout', {
+            credentials: "same-origin"
+        }).then(res => {
+            if (res) {
+                window.location.replace(this.baseUrl);
+            }
+        }).catch(
+            error => console.log(error)
+        )
+
+    }
+
 }

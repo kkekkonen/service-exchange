@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
+import {ApiService} from '../services/apiservice'
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -75,17 +77,23 @@ interface IResponsiveDrawerProps extends WithStyles<typeof styles> {
   title: string;
 }
 
-class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> { 
+class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
     public state = {
       mobileOpen: false,
     };
+
+    private apiService: ApiService;
+    public constructor(props: IResponsiveDrawerProps) {
+      super(props);
+      this.apiService = new ApiService();
+    }
   
     public handleDrawerToggle = () => {
       this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
 
     public handleLogoutButton = () => {
-      // TODO
+      this.apiService.logoutLoggedUser();
     }
   
     public render() {
