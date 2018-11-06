@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
+import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
@@ -16,6 +18,11 @@ import { createStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+    },
+    fab: {
+      position: 'absolute',
+      bottom: theme.spacing.unit * 2,
+      right: theme.spacing.unit * 2,
     }
 });
 
@@ -55,6 +62,9 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
               </ListItem>
             ))}
           </List>
+          <Button variant="fab" className={classes.fab} color="primary">
+            <AddIcon />
+          </Button>
           </Grid>
         </Grid>
       </div>
