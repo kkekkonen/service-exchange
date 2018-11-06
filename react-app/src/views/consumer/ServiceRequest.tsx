@@ -64,7 +64,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
       <div>
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12} container >
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <Typography variant="h4" gutterBottom>
                 {this.state.serviceRequest.title}
               </Typography>
@@ -93,10 +93,10 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 {!this.state.serviceRequest.isOwner &&
-                <Grid container>
+                <Grid container spacing={16}>
                   <Grid item xs={12}>
                     <Button href="#/todo" variant="contained" color="secondary" className="button">
                       View profile
