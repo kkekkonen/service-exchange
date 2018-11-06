@@ -44,6 +44,10 @@ class Profile extends React.Component<IUserProfileProps, IState> {
     )
   }
 
+  public _handleChangeEvent(val: string) {
+    return val;
+  }
+
   public render() {
     console.log('render', this.state)
     const { classes } = this.props;
@@ -51,10 +55,15 @@ class Profile extends React.Component<IUserProfileProps, IState> {
       <div className="Main">
         <Grid className={classes.root} container>
           <FormControl fullWidth={true}>
-            <TextField label="Username" value={this.state.userProfile.username} defaultValue="Username" />
-            <TextField label="First name" value={this.state.userProfile.firstName} defaultValue="First name" />
-            <TextField label="Last name" value={this.state.userProfile.lastName} defaultValue="Last name" />
-            <TextField label="Email" value={this.state.userProfile.email} defaultValue="Email" />
+            <TextField
+              label="Username"
+              value={this.state.userProfile.username}
+              defaultValue=" " 
+              onChange={()=>{this._handleChangeEvent(this.state.userProfile.username)}}
+            />
+            <TextField label="First name" value={this.state.userProfile.firstName} defaultValue=" " />
+            <TextField label="Last name" value={this.state.userProfile.lastName} defaultValue=" " />
+            <TextField label="Email" value={this.state.userProfile.email} defaultValue=" " />
             <TextField label="Password" type="password" />
             <TextField label="Password again" type="password" />
             <Button variant="contained" color="primary" className="button">Save</Button>
