@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core import serializers
 from app.models import *
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import json
@@ -110,6 +111,13 @@ def create_service_offer(request):
     else:
         return HttpResponse(status=405)
 
+def count_pending(offers):
+    pending = 0
+    for offer in offers:
+        if offer.status == "Pending":
+            pending += 1
+    return pending
+
 #@login_required
 @csrf_exempt
 def my_requests(request):
@@ -123,7 +131,8 @@ def my_requests(request):
              'category': r.category.category,
              'zipcode': r.zipcode,
              'timestamp': r.timestamp,
-             'description': r.description
+             'description': r.description,
+             'pending': count_pending(r.offers.all())
         } for r in myRequests]
         return JsonResponse(response, safe=False)
     else:
@@ -212,6 +221,9 @@ def all_service_offers(request):
 
 @csrf_exempt
 def service_offer(request, id):
+    '''this function takes id and returns a service offer with the same pk.
+    A service offer is an offer of service, which can be selected and purchased by any consumer.
+    '''
     if(request.method == "GET"):
         r = get_object_or_404(ServiceOffer, pk=id)
         response = {
@@ -250,6 +262,7 @@ def my_service_offers(request):
 
 @csrf_exempt
 def my_consumer_services(request):
+    '''this function returns all the services of the current user, where the user is the consumer'''
     if(request.method == "GET"):
         Services = Service.objects.filter(consumer=request.user)
         response = [{
@@ -272,6 +285,7 @@ def my_consumer_services(request):
 
 @csrf_exempt
 def my_provider_services(request):
+    '''this function returns all the services of the current user, in which the user is the provider'''
     if(request.method == "GET"):
         Services = Service.objects.filter(provider=request.user)
         response = [{
@@ -304,6 +318,68 @@ def categories(request):
             'category': r.category,
         } for r in categories]
         return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def my_offers(request):
+    '''this function returns the offers made by the user'''
+    if(request.method == "GET"):
+        myOffers = Offer.objects.filter(provider=request.user).all()
+        response = [{
+             'id': r.pk,
+             'title': r.title,
+             'price': r.minPrice,
+             'status': r.status,
+             'timestamp': r.timestamp,
+             'description': r.description,
+             'requestId': r.request.pk
+        } for r in myOffers]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def offer(request, id):
+    '''this function returns the specific offer if the user made the request of offer in question'''
+    if(request.method == "GET"):
+        offer = get_object_or_404(Offer, pk=id)
+        if offer.provider is not request.user and offer.request.consumer is not request.user:
+            return HttpResponse(status=403)
+        response = {
+             'id': offer.pk,
+             'title': offer.title,
+             'price': offer.minPrice,
+             'status': offer.status,
+             'timestamp': offer.timestamp,
+             'description': offer.description,
+             'requestId': offer.request.pk
+        }
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def create_offer(request):
+    '''this function creates a new offer. It takes in a form which needs the request_id of the offers target, description and price'''
+    if(request.method == "POST"):
+        try:
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            request = get_object_or_404(Request, pk=body['id'])
+            offerDict = {
+                'provider': request.user,
+                'status': 'pending',
+                'request': request,
+                'price': body['price'],
+                'description': body['description'],
+                'timestamp': datetime.now()
+            }
+            offer = Offer(**offerDict)
+            offer.save()
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse("invalid request", status=400)
     else:
         return HttpResponse(status=405)
 

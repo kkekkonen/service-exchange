@@ -39,4 +39,7 @@ urlpatterns = [
     path('api/request/<int:id>/', views.request),
     path('api/service_offer/<int:id>/', views.service_offer),
     path('api/service/<int:id>/', views.service),
+    path('api/get_offers', views.my_offers),
+    path('api/get_offers/<int:id>', views.offer),
+    path('api/create_offer', views.create_offer),
 ]
