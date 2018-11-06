@@ -8,6 +8,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import ConsumerMain from './views/ConsumerMain';
 import ConsumerServices from './views/consumer/Services';
+import CreateNewRequest from './views/consumer/CreateNewRequest';
 import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import MyRequests from './views/consumer/MyRequests';
@@ -50,6 +51,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
               <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
               <Route title="My requests" path='/consumer/my_requests' component={MyRequests}/>
+              <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
             </Switch>
           </main>
         </div>
@@ -67,8 +69,10 @@ class App extends React.Component<IAppProps> {
         return 'Consumer main';
       case '/consumer/available_services':
         return 'Available services';
-        case '/consumer/my_requests':
+      case '/consumer/my_requests':
         return 'My requests';
+      case '/consumer/create_request':
+        return 'Create new request';
       case '/consumer/serviceoffer/:id':
         return 'Service offer';
       default:

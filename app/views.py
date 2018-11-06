@@ -57,18 +57,17 @@ def login(request):
             }
             return render(request, 'login.html', context)
 
-#@login_required
+@login_required
 @csrf_exempt
 def create_request(request):
     if(request.method == "POST"):
         try:
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
-            user = User.objects.get(pk=body['user'])
             category = Category.objects.get(pk=body['category_id'])
             requestDict = {
                 'title': body['title'],
-                'consumer': user,
+                'consumer': request.user,
                 'category': category,
                 'minPrice': body['minPrice'],
                 'maxPrice': body['maxPrice'],
@@ -80,6 +79,7 @@ def create_request(request):
             request.save()
             return HttpResponse(status=200)
         except Exception as e:
+            raise
             return HttpResponse("invalid request", status=400)
     else:
         return HttpResponse(status=405)

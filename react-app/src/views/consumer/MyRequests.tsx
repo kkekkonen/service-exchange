@@ -62,7 +62,7 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
               </ListItem>
             ))}
           </List>
-          <Button variant="fab" className={classes.fab} color="primary">
+          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/consumer/create_request"}>
             <AddIcon />
           </Button>
           </Grid>
