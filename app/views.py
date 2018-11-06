@@ -340,6 +340,24 @@ def my_offers(request):
         return HttpResponse(status=405)
 
 @csrf_exempt
+def offers(request, id):
+    '''this function returns the offers of a single request'''
+    if(request.method == "GET"):
+        offers = get_object_or_404(Request, pk=id).offers.all()
+        response = [{
+             'id': r.pk,
+             'title': r.title,
+             'price': r.minPrice,
+             'status': r.status,
+             'timestamp': r.timestamp,
+             'description': r.description,
+             'requestId': r.request.pk
+        } for r in offers]
+        return JsonResponse(response, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
 def offer(request, id):
     '''this function returns the specific offer if the user made the request of offer in question'''
     if(request.method == "GET"):

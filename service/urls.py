@@ -39,7 +39,8 @@ urlpatterns = [
     path('api/request/<int:id>/', views.request),
     path('api/service_offer/<int:id>/', views.service_offer),
     path('api/service/<int:id>/', views.service),
-    path('api/get_offers', views.my_offers),
-    path('api/get_offers/<int:id>', views.offer),
-    path('api/create_offer', views.create_offer),
+    path('api/get_offers', views.my_offers),                                                    #get all the offers made by the user        GET
+    path('api/get_offers/<int:id>', views.offer),                                               #get single offer with its id               GET
+    path('api/create_offer', views.create_offer),                                               #create offer                               POST
+    path('api/get_request_offers/<int:id>', views.offers),                                      #get offers for a request                   GET
 ]
