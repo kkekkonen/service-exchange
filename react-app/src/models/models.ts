@@ -26,7 +26,10 @@ export interface IServiceRequest
     category: string,
     zipcode: number,
     timestamp: string,
-    description: string
+    description: string,
+    consumer: string,
+    isOwner: boolean
+
 }
 
 export interface IUserProfile
@@ -36,9 +39,6 @@ export interface IUserProfile
     firstName: string,
     lastName: string,
     email: string
-    description: string,
-    consumer: string,
-    isOwner: boolean
 }
 
 export interface IService
