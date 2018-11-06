@@ -17,6 +17,12 @@ export class ApiService {
         }).then(res => res.json() as unknown as IServiceOffer[])
     }
 
+    public getMyServiceOffers = () => {
+        return fetch(this.baseUrl + 'api/my_service_offers', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IServiceOffer[])
+    }
+
     public getServiceOffer = (id: number) => {
         return fetch(this.baseUrl + 'api/service_offer/' + id, {
             credentials: "same-origin"

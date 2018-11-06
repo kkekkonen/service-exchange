@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/create_request', views.create_request, name='create_request'),
     path('api/my_requests', views.my_requests, name='my_request'),
     path('api/all_requests', views.all_requests, name='all_request'),
+    path('api/my_service_offers', views.my_service_offers, name='my_service_offers'),
     path('api/categories', views.categories, name='categories'),
     path('api/all_service_offers', views.all_service_offers, name='all_service_offers'),
     path('api/my_provider_services', views.my_provider_services, name='my_provider_services'),

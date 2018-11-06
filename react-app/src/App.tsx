@@ -12,6 +12,7 @@ import CreateNewRequest from './views/consumer/CreateNewRequest';
 import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import MyRequests from './views/consumer/MyRequests';
+import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
@@ -54,6 +55,7 @@ class App extends React.Component<IAppProps> {
               <Route title="My requests" path='/consumer/my_requests' component={MyRequests}/>
               <Route title="Request" path='/request/:id' component={ServiceRequest}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
+              <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
             </Switch>
           </main>
         </div>
@@ -77,6 +79,8 @@ class App extends React.Component<IAppProps> {
         return 'Create new request';
       case '/consumer/serviceoffer/:id':
         return 'Service offer';
+      case '/provider/my_service_offers':
+        return 'My service offers';
       default:
         return 'Page not found';
     }

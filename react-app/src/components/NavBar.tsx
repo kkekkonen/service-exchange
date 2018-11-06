@@ -3,11 +3,11 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../services/apiservice'
-
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Hidden from '@material-ui/core/Hidden';
 import HomeIcon from '@material-ui/icons/Home';
@@ -18,7 +18,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import RoomServiceIcon from '@material-ui/icons/RoomService';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
@@ -136,7 +135,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
                 <ListItemIcon><FeedbackIcon /></ListItemIcon>
                 <ListItemText primary="Open requests" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component="a" href="#/provider/my_service_offers">
                 <ListItemIcon><RoomServiceIcon /></ListItemIcon>
                 <ListItemText primary="My services" />
             </ListItem>
