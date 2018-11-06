@@ -3,6 +3,8 @@ import './App.css';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
+import {ApiService} from './services/apiservice'
+
 import { Route, Switch } from 'react-router-dom'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
@@ -41,11 +43,28 @@ class App extends React.Component<IAppProps> {
   public static contextTypes = {
     router: PropTypes.object
   };
+  public state = {
+    loggedIn: false
+  };
+  private apiService: ApiService;
+  public constructor(props: IAppProps) {
+    super(props);
+    this.apiService = new ApiService();
+  }
+  public componentWillMount() {
+    this.apiService.getLoggedUserProfile().then(userProfile => {
+      this.setState({ loggedIn: true });
+      }
+    ).catch(error => { // redirect user to login page if not logged
+      window.location.href = '/login'
+    })
+  }
 
   public render() {
     const { classes } = this.props;
     return (
       <MuiThemeProvider theme={SXCustomTheme}>
+        { this.state.loggedIn &&
         <div className="App">
           <ResponsiveDrawer title={this.findComponentTitle()} />
           <main className={classes.content}>
@@ -67,6 +86,7 @@ class App extends React.Component<IAppProps> {
             </Switch>
           </main>
         </div>
+       }
       </MuiThemeProvider>
     );
   }
