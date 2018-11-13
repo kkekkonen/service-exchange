@@ -287,6 +287,16 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
+        case '/consumer/service/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/service/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
         case '/provider':
           this.setState({
             showBackButton: true
@@ -341,6 +351,10 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           return 'Create new request';
         case '/consumer/serviceoffer/':
           return 'Available services';
+        case '/consumer/service/':
+          return 'My accepted services';
+        case '/provider/service/':
+          return 'My accepted services';
         case '/provider':
           return 'I provide something';
         case '/provider/my_service_offers':

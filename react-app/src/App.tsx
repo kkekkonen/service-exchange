@@ -22,6 +22,7 @@ import ProviderServiceRequest from './views/provider/ServiceRequest';
 import Requests from './views/provider/Requests';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
+import Service from './views/consumer/Service';
 import ServiceOffer from './views/consumer/ServiceOffer';
 import ServiceRequest from './views/consumer/ServiceRequest';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
@@ -64,6 +65,8 @@ class App extends React.Component<IAppProps> {
               <Route title="My accepted services" path='/provider/accepted_services' component={ProviderAcceptedServices}/>
               <Route title="Request" path='/request/:id' component={ServiceRequest}/>
               <Route title="Provider Request" path='/provider/request/:id' component={ProviderServiceRequest}/>
+              <Route title="Consumer Service" path='/consumer/service/:id' component={Service}/>
+              <Route title="Provider Service" path='/provider/service/:id' component={Service}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
               <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
               <Route title="My offers" path='/provider/my_offers' component={MyOffers}/>

@@ -55,15 +55,14 @@ export interface IServiceRequestOffer
 export interface IService
 {
     id: number,
-    producer: string,
+    provider: string,
     consumer: string,
     status: string,
     zipcode: number,
     title: string,
     timestamp: string,
     description: string,
-    minPrice: number,
-    maxPrice: number,
+    price: number,
     category: string,
     rating: number
 }
