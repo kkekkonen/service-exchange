@@ -10,6 +10,7 @@ import ConsumerAcceptedServices from './views/consumer/AcceptedServices';
 import ConsumerMain from './views/consumer/ConsumerMain';
 import ConsumerServices from './views/consumer/Services';
 import CreateNewRequest from './views/consumer/CreateNewRequest';
+import EditServiceOffer from './views/provider/EditServiceOffer';
 import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import MyOffers from './views/provider/MyOffers';
@@ -72,6 +73,8 @@ class App extends React.Component<IAppProps> {
               <Route title="Consumer Service" path='/consumer/service/:id' component={Service}/>
               <Route title="Provider Service" path='/provider/service/:id' component={Service}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
+              <Route title="Edit service offer" path='/provider/edit_service_offer/:id' component={EditServiceOffer}/>
+              <Route title="Create service offer" path='/provider/create_service_offer' component={EditServiceOffer}/>
               <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
               <Route title="My offers" path='/provider/my_offers' component={MyOffers}/>
               <Route title="Open requests" path='/provider/open_requests' component={Requests}/>

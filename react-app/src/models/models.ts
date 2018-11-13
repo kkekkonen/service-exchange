@@ -15,7 +15,8 @@ export interface IServiceOffer
     description: string,
     minPrice: number,
     maxPrice: number,
-    category: string
+    category: string,
+    categoryid: number
 }
 
 export interface IServiceRequest

@@ -87,7 +87,7 @@ class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps, I
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 <Grid item xs={12}>
-                  <Button href="#/todo" variant="contained" color="primary" className="button">
+                  <Button href={`/app/#/provider/edit_service_offer/${this.state.serviceOffer.id}`} variant="contained" color="primary" className="button">
                     Edit
                   </Button>
                 </Grid>
