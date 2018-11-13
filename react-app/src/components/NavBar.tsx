@@ -98,7 +98,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
       });
       this.checkShowBackButton();
     }
-  
+
     public handleDrawerToggle = () => {
       this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
@@ -110,10 +110,10 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
     public handleLogoutButton = () => {
       this.apiService.logoutLoggedUser();
     }
-  
+
     public render() {
       const { classes } = this.props;
-  
+
       const drawer = (
         <div>
           <div className={classes.toolbar + ' ' + classes.center}>
@@ -177,7 +177,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           </List>
         </div>
       );
-  
+
       return (
         <div className={classes.root}>
           <CssBaseline />
@@ -312,6 +312,11 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
+        case '/consumer/edit_request':
+        this.setState({
+          showBackButton: true
+        });
+        break;
         default:
           this.setState({
             showBackButton: false
@@ -358,5 +363,5 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
       }
     }
   }
-  
+
   export default withRouter(withStyles(styles, { withTheme: true })(ResponsiveDrawer));

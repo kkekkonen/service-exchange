@@ -14,6 +14,7 @@ import Main from './views/Main';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import MyOffers from './views/provider/MyOffers';
 import MyRequests from './views/consumer/MyRequests';
+import EditRequest from './views/consumer/EditRequest';
 import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
 import ProviderAcceptedServices from './views/provider/AcceptedServices';
@@ -65,6 +66,7 @@ class App extends React.Component<IAppProps> {
               <Route title="Request" path='/request/:id' component={ServiceRequest}/>
               <Route title="Provider Request" path='/provider/request/:id' component={ProviderServiceRequest}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
+              <Route title="edit request" path='/consumer/edit_request/:id' component={EditRequest}/>
               <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
               <Route title="My offers" path='/provider/my_offers' component={MyOffers}/>
               <Route title="Open requests" path='/provider/open_requests' component={Requests}/>
@@ -103,6 +105,8 @@ class App extends React.Component<IAppProps> {
         return 'My accepted services';
       case '/provider/open_requests':
         return 'Open requests';
+      case '/consumer/edit_request':
+        return 'Edit Request';
       default:
         return 'Page not found';
     }
@@ -110,4 +114,3 @@ class App extends React.Component<IAppProps> {
 }
 
 export default withStyles(styles, { withTheme: true })(App);
-

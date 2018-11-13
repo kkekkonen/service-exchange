@@ -117,6 +117,27 @@ export class ApiService {
         }).then(res => res.ok)
     }
 
+    public editServiceRequest = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/edit_request', {
+            credentials: "same-origin",
+            method: 'update',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
     public createServiceRequestOffer = (
         id: number,
         price: number,

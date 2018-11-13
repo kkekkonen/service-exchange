@@ -167,7 +167,7 @@ def request(request, id):
             'title': r.title,
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
-            'category': r.category.category,
+            'category': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,

@@ -142,7 +142,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
                 }
                 {this.state.serviceRequest.isOwner &&
                 <Grid item xs={12}>
-                  <Button href="#/todo" variant="contained" color="primary" className="button">
+                  <Button href={"#/consumer/edit_request/"+this.props.match.params.id} variant="contained" color="primary" className="button">
                     Edit
                   </Button>
                 </Grid>
