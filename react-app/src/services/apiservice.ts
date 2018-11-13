@@ -41,6 +41,12 @@ export class ApiService {
         }).then(res => res.json() as unknown as IService[])
     }
 
+    public getService = (id: number) => {
+        return fetch(this.baseUrl + 'api/service/' + id, {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IService)
+    }
+
     public getServiceOffer = (id: number) => {
         return fetch(this.baseUrl + 'api/service_offer/' + id, {
             credentials: "same-origin"
@@ -104,6 +110,49 @@ export class ApiService {
         description: string,
         zipCode: number) => {
         return fetch(this.baseUrl + 'api/create_request', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
+    public createServiceOffer = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/create_service_offer', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
+
+    public editServiceOffer = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/edit_service_offer', {
             credentials: "same-origin",
             method: 'post',
             body: JSON.stringify({

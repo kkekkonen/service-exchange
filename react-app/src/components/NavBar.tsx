@@ -247,6 +247,11 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
+        case '/publicprofile/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
         case '/consumer':
           this.setState({
             showBackButton: true
@@ -282,7 +287,32 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
+        case '/provider/create_service_offer':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/edit_service_offer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
         case '/consumer/serviceoffer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/serviceoffer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/service/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/service/':
           this.setState({
             showBackButton: true
           });
@@ -332,6 +362,8 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           return 'Home';
         case '/profile':
           return 'Profile';
+        case '/publicprofile/':
+          return 'Profile';
         case '/consumer':
           return 'I need something';
         case '/consumer/available_services':
@@ -344,8 +376,18 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           return 'My accepted services';
         case '/consumer/create_request':
           return 'Create new request';
+        case '/provider/create_service_offer':
+          return 'Create new service offer';
+        case '/provider/edit_service_offer/':
+          return 'Edit service offer';
         case '/consumer/serviceoffer/':
           return 'Available services';
+        case '/provider/serviceoffer/':
+          return 'My service offers';
+        case '/consumer/service/':
+          return 'My accepted services';
+        case '/provider/service/':
+          return 'My accepted services';
         case '/provider':
           return 'I provide something';
         case '/provider/my_service_offers':

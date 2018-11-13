@@ -8,13 +8,15 @@ export interface IServiceOffer
 {
     id: number,
     provider: string,
+    providerid: number,
     zipcode: number,
     title: string,
     timestamp: string,
     description: string,
     minPrice: number,
     maxPrice: number,
-    category: string
+    category: string,
+    categoryid: number
 }
 
 export interface IServiceRequest
@@ -28,6 +30,7 @@ export interface IServiceRequest
     timestamp: string,
     description: string,
     consumer: string,
+    consumerid: number,
     isOwner: boolean
     pending: number,
 }
@@ -49,21 +52,23 @@ export interface IServiceRequestOffer
     timestamp: string,
     description: string,
     requestId: number,
-    provider: string
+    provider: string,
+    providerid: number
 }
 
 export interface IService
 {
     id: number,
-    producer: string,
+    provider: string,
+    providerid: number,
     consumer: string,
+    consumerid: number,
     status: string,
     zipcode: number,
     title: string,
     timestamp: string,
     description: string,
-    minPrice: number,
-    maxPrice: number,
+    price: number,
     category: string,
     rating: number
 }

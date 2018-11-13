@@ -25,7 +25,7 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IServiceOfferProps extends WithStyles<typeof styles> {
+interface IProviderServiceOfferProps extends WithStyles<typeof styles> {
   match: any;
 }
 
@@ -34,12 +34,12 @@ interface IState {
 };
 
 
-class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
+class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps, IState> {
   public state = {
     serviceOffer: {} as IServiceOffer
   };
   private apiService: ApiService;
-  public constructor(props: IServiceOfferProps) {
+  public constructor(props: IProviderServiceOfferProps) {
     super(props);
     this.apiService = new ApiService();
   }
@@ -87,16 +87,8 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 <Grid item xs={12}>
-                  {this.state.serviceOffer.provider}
-                </Grid>
-                <Grid item xs={12}>
-                  <Button href={`/app/#/publicprofile/${this.state.serviceOffer.providerid}`} variant="contained" color="secondary" className="button">
-                    View profile
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button onClick={ () => this.Button_Click(this.state.serviceOffer.id)} variant="contained" color="primary" className="button">
-                    Accept deal
+                  <Button href={`/app/#/provider/edit_service_offer/${this.state.serviceOffer.id}`} variant="contained" color="primary" className="button">
+                    Edit
                   </Button>
                 </Grid>
               </Grid>
@@ -111,4 +103,4 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ServiceOffer);
+export default withStyles(styles, { withTheme: true })(ProviderServiceOffer);

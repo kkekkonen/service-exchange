@@ -5,7 +5,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import {ApiService} from '../../services/apiservice'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {IServiceOffer} from '../../models/models'
+import {IService} from '../../models/models'
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
@@ -25,21 +25,21 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IServiceOfferProps extends WithStyles<typeof styles> {
+interface IServiceProps extends WithStyles<typeof styles> {
   match: any;
 }
 
 interface IState {
-  serviceOffer: IServiceOffer;
+  service: IService;
 };
 
 
-class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
+class Service extends React.Component<IServiceProps, IState> {
   public state = {
-    serviceOffer: {} as IServiceOffer
+    service: {} as IService
   };
   private apiService: ApiService;
-  public constructor(props: IServiceOfferProps) {
+  public constructor(props: IServiceProps) {
     super(props);
     this.apiService = new ApiService();
   }
@@ -47,7 +47,7 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
     this.apiService.acceptServiceOffer(id)
   }
   public componentDidMount(){
-    this.apiService.getServiceOffer(this.props.match.params.id).then(serviceOffer => this.setState({ serviceOffer }))
+    this.apiService.getService(this.props.match.params.id).then(service => this.setState({ service }))
   }
   public render() {
     const { classes } = this.props;
@@ -57,14 +57,14 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
           <Grid item xs={12} container >
           <Grid item md={6} xs={12}>
               <Typography variant="h4" gutterBottom>
-                {this.state.serviceOffer.title}
+                {this.state.service.title}
               </Typography>
               <div className={classes.field}>
                 <div className={classes.fieldUpper}>
                   Category
                 </div>
                 <div className={classes.fieldLower}>
-                  {this.state.serviceOffer.category}
+                  {this.state.service.category}
                 </div>
               </div>
               <div className={classes.field}>
@@ -72,7 +72,7 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                   Zip code
                 </div>
                 <div className={classes.fieldLower}>
-                  {this.state.serviceOffer.zipcode}
+                  {this.state.service.zipcode}
                 </div>
               </div>
               <div className={classes.field}>
@@ -80,30 +80,33 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                   Created on
                 </div>
                 <div className={classes.fieldLower}>
-                  {this.state.serviceOffer.timestamp}
+                  {this.state.service.timestamp}
+                </div>
+              </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Accepted price
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.service.price}€
                 </div>
               </div>
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16}>
                 <Grid item xs={12}>
-                  {this.state.serviceOffer.provider}
+                  {this.state.service.provider}
                 </Grid>
                 <Grid item xs={12}>
-                  <Button href={`/app/#/publicprofile/${this.state.serviceOffer.providerid}`} variant="contained" color="secondary" className="button">
+                  <Button href={`/app/#/publicprofile/${this.state.service.providerid}`} variant="contained" color="secondary" className="button">
                     View profile
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button onClick={ () => this.Button_Click(this.state.serviceOffer.id)} variant="contained" color="primary" className="button">
-                    Accept deal
                   </Button>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            {this.state.serviceOffer.description}
+            {this.state.service.description}
           </Grid>
         </Grid>
       </div>
@@ -111,4 +114,4 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ServiceOffer);
+export default withStyles(styles, { withTheme: true })(Service);

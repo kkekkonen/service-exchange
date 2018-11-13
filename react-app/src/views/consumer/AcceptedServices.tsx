@@ -53,11 +53,11 @@ class ConsumerAcceptedServices extends React.Component<IConsumerAcceptedServices
               </Typography>
             }
             {this.state.services.map(service => (
-              <ListItem key={service.id} dense button component='a' href={`/app/#/service/${service.id}`}>
+              <ListItem key={service.id} dense button component='a' href={`/app/#/consumer/service/${service.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>
-                <ListItemText primary={`${service.title}`} secondary={service.producer} />
+                <ListItemText primary={`${service.title}`} secondary={service.provider} />
               </ListItem>
             ))}
           </List>

@@ -60,7 +60,7 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
               </Typography>
               }
               {this.state.myServiceOffers.map(serviceOffer => (
-                <ListItem key={serviceOffer.id} dense button component='a' href={`/app/#/consumer/service_offer/${serviceOffer.id}`}>
+                <ListItem key={serviceOffer.id} dense button component='a' href={`/app/#/provider/serviceoffer/${serviceOffer.id}`}>
                   <Avatar>
                     <ImageIcon />
                   </Avatar>

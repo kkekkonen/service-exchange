@@ -152,7 +152,8 @@ def all_requests(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'consumer': r.consumer.get_full_name()
+            'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk
         } for r in Requests]
         return JsonResponse(response, safe=False)
     else:
@@ -172,6 +173,7 @@ def request(request, id):
             'timestamp': r.timestamp,
             'description': r.description,
             'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
             'isOwner': r.consumer.pk == request.user.pk
         }
         return JsonResponse(response, safe=False)
@@ -185,13 +187,14 @@ def service(request, id):
         response = {
             'id': r.pk,
             'title': r.title,
-            'minPrice': r.minPrice,
-            'maxPrice': r.maxPrice,
+            'price': r.price,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'consumer': r.consumer.get_full_name(),
-            'producer': r.producer.get_full_name(),
+            'consumerid': r.consumer.pk,
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -213,7 +216,8 @@ def all_service_offers(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         } for r in ServiceOffers]
         return JsonResponse(response, safe=False)
     else:
@@ -232,10 +236,12 @@ def service_offer(request, id):
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,
+            'categoryid': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         }
         return JsonResponse(response, safe=False)
     else:
@@ -251,10 +257,12 @@ def my_service_offers(request):
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,
+            'categoryid': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         } for r in ServiceOffers]
         return JsonResponse(response, safe=False)
     else:
@@ -273,7 +281,9 @@ def my_consumer_services(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
             'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -295,7 +305,9 @@ def my_provider_services(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
             'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -348,6 +360,7 @@ def offers(request, id):
              'timestamp': r.timestamp,
              'description': r.description,
              'provider': r.provider.get_full_name(),
+             'providerid': r.provider.pk,
              'requestId': r.request.pk
         } for r in offers]
         return JsonResponse(response, safe=False)
