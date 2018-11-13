@@ -1,13 +1,11 @@
 import * as React from 'react';
 
+import {IServiceRequest, IServiceRequestOffer} from '../../models/models'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import {IServiceOffer} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,25 +25,36 @@ const styles = (theme: Theme) =>
     }
 });
 
-interface IMyServiceOffersProps extends WithStyles<typeof styles> {
+interface IMyOffersProps extends WithStyles<typeof styles> {
 }
 
 interface IState {
-  myServiceOffers: IServiceOffer[];
+  myOffers: IServiceRequestOffer[];
+  serviceRequests: IServiceRequest[];
 };
 
 
-class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
+class MyOffers extends React.Component<IMyOffersProps, IState> {
   public state = {
-    myServiceOffers: [] as IServiceOffer[]
+    myOffers: [] as IServiceRequestOffer[],
+    serviceRequests: [] as IServiceRequest[]
   };
   private apiService: ApiService;
-  public constructor(props: IMyServiceOffersProps) {
+  public constructor(props: IMyOffersProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyServiceOffers().then(myServiceOffers => this.setState({ myServiceOffers }))
+    this.apiService.getMyServiceRequestOffers().then(myOffers => {
+      this.setState({ myOffers });
+      this.state.myOffers.forEach(offer => {
+        this.apiService.getServiceRequest(offer.requestId).then(request => {
+          const serviceRequests = this.state.serviceRequests;
+          serviceRequests.push(request);
+          this.setState({ serviceRequests });
+        });
+      });
+    })
   }
   public render() {
     const { classes } = this.props;
@@ -54,23 +63,20 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-              {this.state.myServiceOffers.length === 0 &&
+              {this.state.myOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
-                You do not yet have any service offers. Why not create one now if you have something you can provide?
+                You have not made any offers. Go browse the requests and make offers.
               </Typography>
               }
-              {this.state.myServiceOffers.map(serviceOffer => (
-                <ListItem key={serviceOffer.id} dense button component='a' href={`/app/#/provider/serviceoffer/${serviceOffer.id}`}>
+              {this.state.myOffers.map(offer => (
+                <ListItem key={offer.id} dense button component='a' href={`/app/#/provider/request/${offer.requestId}`}>
                   <Avatar>
                     <ImageIcon />
                   </Avatar>
-                  <ListItemText primary={`${serviceOffer.title}`} />
+                  <ListItemText primary={`${offer.price}€`} secondary={`${this.state.serviceRequests.find(x => x.id === offer.requestId) ? this.state.serviceRequests.find(x => x.id === offer.requestId)!.title : ''}`} />
                 </ListItem>
               ))}
             </List>
-          <Button variant="fab" className={classes.fab} color="primary" component='a' href={"/app/#/provider/create_service_offer"}>
-            <AddIcon />
-          </Button>
           </Grid>
         </Grid>
       </div>
@@ -78,4 +84,4 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MyServiceOffers);
+export default withStyles(styles, { withTheme: true })(MyOffers);

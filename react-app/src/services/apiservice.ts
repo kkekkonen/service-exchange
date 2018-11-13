@@ -41,6 +41,12 @@ export class ApiService {
         }).then(res => res.json() as unknown as IService[])
     }
 
+    public getService = (id: number) => {
+        return fetch(this.baseUrl + 'api/service/' + id, {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IService)
+    }
+
     public getServiceOffer = (id: number) => {
         return fetch(this.baseUrl + 'api/service_offer/' + id, {
             credentials: "same-origin"
@@ -57,6 +63,12 @@ export class ApiService {
         return fetch(this.baseUrl + 'api/my_requests', {
             credentials: "same-origin"
         }).then(res => res.json() as unknown as IServiceRequest[])
+    }
+
+    public getMyServiceRequestOffers = () => {
+        return fetch(this.baseUrl + 'api/get_offers', {
+            credentials: "same-origin"
+        }).then(res => res.json() as unknown as IServiceRequestOffer[])
     }
 
     public getLoggedUserProfile = () => {
@@ -108,6 +120,102 @@ export class ApiService {
                 "description": description,
                 "zipcode": zipCode
             })
+        }).then(res => res.ok)
+    }
+
+    public createServiceOffer = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/create_service_offer', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
+
+    public editServiceOffer = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/edit_service_offer', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
+    public editServiceRequest = (
+        title: string,
+        categoryId: number,
+        minPrice: number,
+        maxPrice: number,
+        description: string,
+        zipCode: number) => {
+        return fetch(this.baseUrl + 'api/edit_request', {
+            credentials: "same-origin",
+            method: 'update',
+            body: JSON.stringify({
+                "title": title,
+                "category_id": categoryId,
+                "minPrice": minPrice,
+                "maxPrice": maxPrice,
+                "description": description,
+                "zipcode": zipCode
+            })
+        }).then(res => res.ok)
+    }
+
+    public createServiceRequestOffer = (
+        id: number,
+        price: number,
+        description: string
+        ) => {
+        return fetch(this.baseUrl + 'api/create_offer', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "id": id,
+                "price": price,
+                "description": description
+            })
+        }).then(res => res.ok)
+    }
+
+    public acceptServiceOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/accept_service_offer/' + id, {
+            credentials: "same-origin"
+        }).then(res => res.ok)
+    }
+    public declineOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/decline_offer/' + id, {
+            credentials: "same-origin"
+        }).then(res => res.ok)
+    }
+    public acceptOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/accept_offer/' + id, {
+            credentials: "same-origin"
         }).then(res => res.ok)
     }
 }

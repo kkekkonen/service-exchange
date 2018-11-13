@@ -53,7 +53,7 @@ class ProviderAcceptedServices extends React.Component<IProviderAcceptedServices
               </Typography>
             }
             {this.state.services.map(service => (
-              <ListItem key={service.id} dense button component='a' href={`/app/#/service/${service.id}`}>
+              <ListItem key={service.id} dense button component='a' href={`/app/#/provider/service/${service.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>

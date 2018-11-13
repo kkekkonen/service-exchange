@@ -1,9 +1,11 @@
 import * as React from 'react';
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../services/apiservice'
 import AppBar from '@material-ui/core/AppBar';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
@@ -47,6 +49,7 @@ const styles = (theme: Theme) =>
   },
   menuButton: {
     marginRight: 20,
+    marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
@@ -71,34 +74,46 @@ const styles = (theme: Theme) =>
 
 interface IState {
   mobileOpen: boolean;
+  showBackButton: boolean;
 };
 
 interface IResponsiveDrawerProps extends WithStyles<typeof styles> {
   title: string;
 }
 
-class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
+class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteComponentProps, IState> {
     public state = {
       mobileOpen: false,
+      showBackButton: false
     };
 
     private apiService: ApiService;
-    public constructor(props: IResponsiveDrawerProps) {
+    public constructor(props: IResponsiveDrawerProps & RouteComponentProps) {
       super(props);
       this.apiService = new ApiService();
+
+      this.props.history.listen((location, action) => {
+        console.log("on route change");
+        this.checkShowBackButton();
+      });
+      this.checkShowBackButton();
     }
-  
+
     public handleDrawerToggle = () => {
       this.setState(state => ({ mobileOpen: !state.mobileOpen }));
+    };
+
+    public handleNavigateBack = () => {
+      this.props.history.goBack();
     };
 
     public handleLogoutButton = () => {
       this.apiService.logoutLoggedUser();
     }
-  
+
     public render() {
       const { classes } = this.props;
-  
+
       const drawer = (
         <div>
           <div className={classes.toolbar + ' ' + classes.center}>
@@ -144,7 +159,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
                 <ListItemIcon><RoomServiceIcon /></ListItemIcon>
                 <ListItemText primary="My services" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component="a" href="#/provider/my_offers">
                 <ListItemIcon><SupervisorAccount /></ListItemIcon>
                 <ListItemText primary="My offers" />
             </ListItem>
@@ -162,12 +177,20 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
           </List>
         </div>
       );
-  
+
       return (
         <div className={classes.root}>
           <CssBaseline />
           <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
+              {this.state.showBackButton === true &&
+                <IconButton color="inherit" aria-label="Back" onClick={this.handleNavigateBack}>
+                  <ArrowBackIcon />
+                </IconButton>
+              }
+              <Typography variant="h6" color="inherit" noWrap>
+                {this.findComponentTitle()}
+              </Typography>
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
@@ -176,9 +199,6 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" color="inherit" noWrap>
-                {this.props.title}
-              </Typography>
             </Toolbar>
           </AppBar>
           <nav className={classes.drawer}>
@@ -213,6 +233,179 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps, IState> {
         </div>
       );
     }
+
+    private checkShowBackButton = () => {
+      const pathname = this.props.location.pathname.replace(/\d+/g, '');
+      switch (pathname) {
+        case '/':
+          this.setState({
+            showBackButton: false
+          });
+          break;
+        case '/profile':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/publicprofile/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/available_services':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/my_requests':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/request/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/request/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/accepted_services':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/create_request':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/create_service_offer':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/edit_service_offer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/serviceoffer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/serviceoffer/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/service/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/service/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/my_service_offers':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/my_offers':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/accepted_services':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/provider/open_requests':
+          this.setState({
+            showBackButton: true
+          });
+          break;
+        case '/consumer/edit_request/':
+          this.setState({
+            showBackButton: true
+          });
+        break;
+        default:
+          this.setState({
+            showBackButton: false
+          });
+          break;
+      }
+    }
+
+    private findComponentTitle = () => {
+      const pathname = this.props.location.pathname.replace(/\d+/g, '');
+      switch (pathname) {
+        case '/':
+          return 'Home';
+        case '/profile':
+          return 'Profile';
+        case '/publicprofile/':
+          return 'Profile';
+        case '/consumer':
+          return 'I need something';
+        case '/consumer/available_services':
+          return 'Available services';
+        case '/consumer/my_requests':
+          return 'My requests';
+        case '/request/':
+          return 'My requests';
+        case '/consumer/accepted_services':
+          return 'My accepted services';
+        case '/consumer/create_request':
+          return 'Create new request';
+        case '/provider/create_service_offer':
+          return 'Create new service offer';
+        case '/provider/edit_service_offer/':
+          return 'Edit service offer';
+        case '/consumer/serviceoffer/':
+          return 'Available services';
+        case '/provider/serviceoffer/':
+          return 'My service offers';
+        case '/consumer/service/':
+          return 'My accepted services';
+        case '/provider/service/':
+          return 'My accepted services';
+        case '/provider':
+          return 'I provide something';
+        case '/provider/my_service_offers':
+          return 'My service offers';
+        case '/provider/my_offers':
+          return 'My offers';
+        case '/provider/accepted_services':
+          return 'My accepted services';
+        case '/provider/open_requests':
+          return 'Open requests';
+        case '/provider/request/':
+          return 'Open requests';
+        case '/consumer/edit_request/':
+          return 'Edit request';
+        default:
+          return 'Page not found';
+      }
+    }
   }
-  
-  export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+
+  export default withRouter(withStyles(styles, { withTheme: true })(ResponsiveDrawer));

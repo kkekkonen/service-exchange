@@ -91,11 +91,10 @@ def create_service_offer(request):
         try:
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
-            user = User.objects.get(pk=body['user'])
             category = Category.objects.get(pk=body['category_id'])
             serviceDict = {
                 'title': body['title'],
-                'provider': user,
+                'provider': request.user,
                 'category': category,
                 'minPrice': body['minPrice'],
                 'maxPrice': body['maxPrice'],
@@ -114,7 +113,7 @@ def create_service_offer(request):
 def count_pending(offers):
     pending = 0
     for offer in offers:
-        if offer.status == OfferStatus.PENDING:
+        if offer.status == "PENDING":
             pending += 1
     return pending
 
@@ -142,7 +141,7 @@ def my_requests(request):
 @csrf_exempt
 def all_requests(request):
     if(request.method == "GET"):
-        Requests = Request.objects.all()
+        Requests = Request.objects.filter(~Q(consumer=request.user)).all()
         response = [{
             'id': r.pk,
             'title': r.title,
@@ -152,7 +151,8 @@ def all_requests(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'consumer': r.consumer.get_full_name()
+            'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk
         } for r in Requests]
         return JsonResponse(response, safe=False)
     else:
@@ -167,11 +167,12 @@ def request(request, id):
             'title': r.title,
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
-            'category': r.category.category,
+            'category': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
             'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
             'isOwner': r.consumer.pk == request.user.pk
         }
         return JsonResponse(response, safe=False)
@@ -185,13 +186,14 @@ def service(request, id):
         response = {
             'id': r.pk,
             'title': r.title,
-            'minPrice': r.minPrice,
-            'maxPrice': r.maxPrice,
+            'price': r.price,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'consumer': r.consumer.get_full_name(),
-            'producer': r.producer.get_full_name(),
+            'consumerid': r.consumer.pk,
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -213,7 +215,8 @@ def all_service_offers(request):
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         } for r in ServiceOffers]
         return JsonResponse(response, safe=False)
     else:
@@ -232,10 +235,12 @@ def service_offer(request, id):
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,
+            'categoryid': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         }
         return JsonResponse(response, safe=False)
     else:
@@ -251,10 +256,12 @@ def my_service_offers(request):
             'minPrice': r.minPrice,
             'maxPrice': r.maxPrice,
             'category': r.category.category,
+            'categoryid': r.category.pk,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
             'description': r.description,
-            'provider': r.provider.get_full_name()
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk
         } for r in ServiceOffers]
         return JsonResponse(response, safe=False)
     else:
@@ -268,13 +275,14 @@ def my_consumer_services(request):
         response = [{
             'id': r.pk,
             'title': r.title,
-            'minPrice': r.minPrice,
-            'maxPrice': r.maxPrice,
+            'price': r.price,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
-            'consumer': r.consumer,
-            'producer': r.producer,
+            'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -291,13 +299,14 @@ def my_provider_services(request):
         response = [{
             'id': r.pk,
             'title': r.title,
-            'minPrice': r.minPrice,
-            'maxPrice': r.maxPrice,
+            'price': r.price,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
-            'consumer': r.consumer,
-            'producer': r.producer,
+            'consumer': r.consumer.get_full_name(),
+            'consumerid': r.consumer.pk,
+            'provider': r.provider.get_full_name(),
+            'providerid': r.provider.pk,
             'status': r.status,
             'rating': r.rating,
             'description': r.description
@@ -328,8 +337,7 @@ def my_offers(request):
         myOffers = Offer.objects.filter(provider=request.user).all()
         response = [{
              'id': r.pk,
-             'title': r.title,
-             'price': r.minPrice,
+             'price': r.price,
              'status': r.status,
              'timestamp': r.timestamp,
              'description': r.description,
@@ -343,7 +351,7 @@ def my_offers(request):
 def offers(request, id):
     '''this function returns the offers of a single request'''
     if(request.method == "GET"):
-        offers = get_object_or_404(Request, pk=id).offers.all()
+        offers = get_object_or_404(Request, pk=id).offers.filter(~Q(status='REJECTED')).all()
         response = [{
              'id': r.pk,
              'price': r.price,
@@ -351,6 +359,7 @@ def offers(request, id):
              'timestamp': r.timestamp,
              'description': r.description,
              'provider': r.provider.get_full_name(),
+             'providerid': r.provider.pk,
              'requestId': r.request.pk
         } for r in offers]
         return JsonResponse(response, safe=False)
@@ -391,7 +400,7 @@ def create_offer(request):
                 'request': r,
                 'price': body['price'],
                 'description': body['description'],
-                'timestamp': datetime.now()
+                'timestamp': datetime.now(tz=timezone.utc)
             }
             offer = Offer(**offerDict)
             offer.save()
@@ -406,26 +415,28 @@ def accept_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
     try:
         r = offer.request
-        if request.user is not r.consumer:
+        if request.user.pk is not r.consumer.pk:
             return HttpResponse(status=403)
         serviceDict = {
+            'serviceOffer': None,
             'title': r.title,
             'consumer': r.consumer,
             'provider': offer.provider,
             'status': 'pending',
             'price': offer.price,
-            'description': r.price,
+            'description': offer.price,
             'category': r.category,
             'zipcode': r.zipcode,
-            'status': ServiceStatus.PENDING,
+            'status': "PENDING",
             'rating': 0,                          #ignore rating until status is COMPLETED
-            'timestamp': datetime.now()
+            'timestamp': datetime.now(tz=timezone.utc)
         }
         service = Service(**serviceDict)
         service.save()
         offer.delete()
         r.delete()
     except Exception as e:
+        print(e)
         return HttpResponse("invalid request", status=400)
     return HttpResponse(status=200)
 
@@ -434,31 +445,40 @@ def accept_service_offer(request, id):
     It is accepted by the consumer who made the request'''
     serviceOffer = get_object_or_404(ServiceOffer, pk=id)
     try:
-        serviceDict = {
-            'title': serviceOffer.title,
-            'consumer': request.user,
-            'provider': serviceOffer.provider,
-            'status': 'pending',
-            'price': serviceOffer.minPrice,
-            'description': serviceOffer.price,
-            'category': serviceOffer.category,
-            'zipcode': serviceOffer.zipcode,
-            'status': ServiceStatus.PENDING,
-            'rating': 0,                          #ignore rating until status is COMPLETED
-            'timestamp': datetime.now()
-        }
-        service = Service(**serviceDict)
-        service.save()
-        serviceOffer.delete()
+        check = Service.objects.get(serviceOffer=serviceOffer.pk, consumer=request.user)
+        return HttpResponse(status=400)
+    except Service.DoesNotExist:
+        check = None
+    try:
+        if check == None:
+            serviceDict = {
+                'serviceOffer': serviceOffer.pk,
+                'title': serviceOffer.title,
+                'consumer': request.user,
+                'provider': serviceOffer.provider,
+                'status': 'pending',
+                'price': serviceOffer.minPrice,
+                'description': serviceOffer.description,
+                'category': serviceOffer.category,
+                'zipcode': serviceOffer.zipcode,
+                'status': "PENDING",
+                'rating': 0,                          #ignore rating until status is COMPLETED
+                'timestamp': datetime.now(tz=timezone.utc)
+            }
+            service = Service(**serviceDict)
+            service.save()
     except Exception as e:
         return HttpResponse("invalid request", status=400)
     return HttpResponse(status=200)
 
 def decline_offer(request, id):
-    offer = get_object_or_404(Offer, pk=body['id'])
-    if request.user is not offer.request.consumer:
+    offer = get_object_or_404(Offer, pk=id)
+    print(request.user.pk)
+    print(offer.request.consumer.pk)
+    if request.user.pk is not offer.request.consumer.pk:
         return HttpResponse(status=403)
-    offer.status = OfferStatus.REJECTED
+    offer.status = "REJECTED"
+    offer.save()
     return HttpResponse(status=200)
 
 @csrf_exempt
