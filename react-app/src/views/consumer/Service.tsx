@@ -98,7 +98,7 @@ class Service extends React.Component<IServiceProps, IState> {
                   {this.state.service.provider}
                 </Grid>
                 <Grid item xs={12}>
-                  <Button href="#/todo" variant="contained" color="secondary" className="button">
+                  <Button href={`/app/#/publicprofile/${this.state.service.providerid}`} variant="contained" color="secondary" className="button">
                     View profile
                   </Button>
                 </Grid>

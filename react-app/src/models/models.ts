@@ -8,6 +8,7 @@ export interface IServiceOffer
 {
     id: number,
     provider: string,
+    providerid: number,
     zipcode: number,
     title: string,
     timestamp: string,
@@ -28,6 +29,7 @@ export interface IServiceRequest
     timestamp: string,
     description: string,
     consumer: string,
+    consumerid: number,
     isOwner: boolean
     pending: number,
 }
@@ -49,14 +51,17 @@ export interface IServiceRequestOffer
     timestamp: string,
     description: string,
     requestId: number,
-    provider: string
+    provider: string,
+    providerid: number
 }
 
 export interface IService
 {
     id: number,
     provider: string,
+    providerid: number,
     consumer: string,
+    consumerid: number,
     status: string,
     zipcode: number,
     title: string,

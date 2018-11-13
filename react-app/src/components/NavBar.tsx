@@ -247,6 +247,11 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
+        case '/publicprofile/':
+          this.setState({
+            showBackButton: true
+          });
+          break;
         case '/consumer':
           this.setState({
             showBackButton: true
@@ -336,6 +341,8 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
         case '/':
           return 'Home';
         case '/profile':
+          return 'Profile';
+        case '/publicprofile/':
           return 'Profile';
         case '/consumer':
           return 'I need something';

@@ -19,6 +19,7 @@ import Profile from './views/Profile';
 import ProviderAcceptedServices from './views/provider/AcceptedServices';
 import ProviderMain from './views/provider/ProviderMain';
 import ProviderServiceRequest from './views/provider/ServiceRequest';
+import PublicProfile from './views/PublicProfile';
 import Requests from './views/provider/Requests';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
@@ -56,6 +57,7 @@ class App extends React.Component<IAppProps> {
             <Switch>
               <Route title="Home" exact path='/' component={Main}/>
               <Route title="Profile" exact path='/profile' component={Profile}/>
+              <Route title="Public Profile" exact path='/publicprofile/:id' component={PublicProfile}/>
               <Route title="I need something"exact path='/consumer' component={ConsumerMain}/>
               <Route title="I provide something"exact path='/provider' component={ProviderMain}/>
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
