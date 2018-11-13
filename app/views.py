@@ -142,7 +142,7 @@ def my_requests(request):
 @csrf_exempt
 def all_requests(request):
     if(request.method == "GET"):
-        Requests = Request.objects.all()
+        Requests = Request.objects.filter(~Q(consumer=request.user)).all()
         response = [{
             'id': r.pk,
             'title': r.title,
@@ -430,12 +430,12 @@ def accept_offer(request, id):
     return HttpResponse(status=200)
 
 def accept_service_offer(request, id):
-    print(id)
     '''this function is used to accept offers made by providers.
     It is accepted by the consumer who made the request'''
     serviceOffer = get_object_or_404(ServiceOffer, pk=id)
     try:
-        check = Service.objects.get(serviceOffer=serviceOffer.pk)
+        check = Service.objects.get(serviceOffer=serviceOffer.pk, consumer=request.user)
+        return HttpResponse(status=400)
     except Service.DoesNotExist:
         check = None
     try:
@@ -454,11 +454,9 @@ def accept_service_offer(request, id):
                 'rating': 0,                          #ignore rating until status is COMPLETED
                 'timestamp': datetime.now(tz=timezone.utc)
             }
-            print(serviceDict)
             service = Service(**serviceDict)
             service.save()
     except Exception as e:
-        print(e)
         return HttpResponse("invalid request", status=400)
     return HttpResponse(status=200)
 

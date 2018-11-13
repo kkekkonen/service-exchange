@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {IServiceRequest, IServiceRequestOffer} from '../../models/models'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
@@ -41,24 +42,48 @@ interface IServiceRequestProps extends WithStyles<typeof styles> {
 interface IState {
   serviceRequest: IServiceRequest;
   requestOffers: IServiceRequestOffer[];
+  hasError: boolean;
+  errorText: string;
 };
 
 
-class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
+class ServiceRequest extends React.Component<IServiceRequestProps & RouteComponentProps, IState> {
   public state = {
     serviceRequest: {} as IServiceRequest,
-    requestOffers: [] as IServiceRequestOffer[]
+    requestOffers: [] as IServiceRequestOffer[],
+    hasError: false,
+    errorText: ""
   };
   private apiService: ApiService;
-  public constructor(props: IServiceRequestProps) {
+  public constructor(props: IServiceRequestProps & RouteComponentProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public accept_offer(id:number): void {
-    this.apiService.acceptOffer(id)
+    this.apiService.acceptOffer(id).then(ok =>
+    {
+      if (ok) {
+        this.props.history.push('/consumer/accepted_services');
+      } else {
+        this.setState({
+          hasError: true,
+          errorText: "Save was not succesful. Try again."
+        });
+      }
+    })
   }
   public decline_offer(id:number): void {
-    this.apiService.declineOffer(id)
+    this.apiService.declineOffer(id).then(ok =>
+    {
+      if (ok) {
+        this.apiService.getOffersForRequest(this.props.match.params.id).then(requestOffers => this.setState({ requestOffers }));
+      } else {
+        this.setState({
+          hasError: true,
+          errorText: "Decline not successful."
+        });
+      }
+    })
   }
   public componentDidMount(){
     this.apiService.getServiceRequest(this.props.match.params.id).then(serviceRequest => this.setState({ serviceRequest }));
@@ -161,5 +186,4 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
     );
   }
 }
-
-export default withStyles(styles, { withTheme: true })(ServiceRequest);
+export default withRouter(withStyles(styles, { withTheme: true })(ServiceRequest));
