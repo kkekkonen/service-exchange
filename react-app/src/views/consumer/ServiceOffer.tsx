@@ -43,6 +43,9 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
     super(props);
     this.apiService = new ApiService();
   }
+  public Button_Click(id:number): void {
+    this.apiService.acceptServiceOffer(id)
+  }
   public componentDidMount(){
     this.apiService.getServiceOffer(this.props.match.params.id).then(serviceOffer => this.setState({ serviceOffer }))
   }
@@ -92,7 +95,7 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button href="#/todo" variant="contained" color="primary" className="button">
+                  <Button onClick={ () => this.Button_Click(this.state.serviceOffer.id)} variant="contained" color="primary" className="button">
                     Accept deal
                   </Button>
                 </Grid>

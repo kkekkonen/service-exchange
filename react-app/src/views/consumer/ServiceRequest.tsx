@@ -54,6 +54,12 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
     super(props);
     this.apiService = new ApiService();
   }
+  public accept_offer(id:number): void {
+    this.apiService.acceptOffer(id)
+  }
+  public decline_offer(id:number): void {
+    this.apiService.declineOffer(id)
+  }
   public componentDidMount(){
     this.apiService.getServiceRequest(this.props.match.params.id).then(serviceRequest => this.setState({ serviceRequest }));
     this.apiService.getOffersForRequest(this.props.match.params.id).then(requestOffers => this.setState({ requestOffers }));
@@ -140,10 +146,10 @@ class ServiceRequest extends React.Component<IServiceRequestProps, IState> {
                   <ListItemText primary={`${offer.price}€`} secondary={offer.provider}/>
                   <ListItemSecondaryAction>
                       <IconButton aria-label="Delete">
-                        <CancelIcon />
+                        <CancelIcon onClick={ () => this.decline_offer(offer.id)} />
                       </IconButton>
                       <IconButton aria-label="Delete">
-                        <CheckIcon />
+                        <CheckIcon onClick={ () => this.accept_offer(offer.id)} />
                       </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>

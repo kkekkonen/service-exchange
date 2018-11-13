@@ -116,4 +116,20 @@ export class ApiService {
             })
         }).then(res => res.ok)
     }
+
+    public acceptServiceOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/accept_service_offer/' + id, {
+            credentials: "same-origin"
+        })
+    }
+    public declineOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/decline_offer/' + id, {
+            credentials: "same-origin"
+        })
+    }
+    public acceptOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/accept_offer/' + id, {
+            credentials: "same-origin"
+        })
+    }
 }
