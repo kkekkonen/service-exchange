@@ -47,7 +47,7 @@ class Requests extends React.Component<IRequestsProps, IState> {
           <Grid item xs={12}>
             <List>
             {this.state.serviceRequests.map(request => (
-              <ListItem key={request.id} dense button component='a' href={`/app/#/request/${request.id}`}>
+              <ListItem key={request.id} dense button component='a' href={`/app/#/provider/request/${request.id}`}>
                 <Avatar>
                   <ImageIcon />
                 </Avatar>

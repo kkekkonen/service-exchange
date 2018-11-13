@@ -18,6 +18,7 @@ import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
 import ProviderAcceptedServices from './views/provider/AcceptedServices';
 import ProviderMain from './views/provider/ProviderMain';
+import ProviderServiceRequest from './views/provider/ServiceRequest';
 import Requests from './views/provider/Requests';
 import ResponsiveDrawer from './components/NavBar'
 import SXCustomTheme from './components/Theme';
@@ -62,6 +63,7 @@ class App extends React.Component<IAppProps> {
               <Route title="My accepted services" path='/consumer/accepted_services' component={ConsumerAcceptedServices}/>
               <Route title="My accepted services" path='/provider/accepted_services' component={ProviderAcceptedServices}/>
               <Route title="Request" path='/request/:id' component={ServiceRequest}/>
+              <Route title="Provider Request" path='/provider/request/:id' component={ProviderServiceRequest}/>
               <Route title="Create new request" path='/consumer/create_request' component={CreateNewRequest}/>
               <Route title="My service offers" path='/provider/my_service_offers' component={MyServiceOffers}/>
               <Route title="My offers" path='/provider/my_offers' component={MyOffers}/>
