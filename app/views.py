@@ -326,8 +326,7 @@ def my_offers(request):
         myOffers = Offer.objects.filter(provider=request.user).all()
         response = [{
              'id': r.pk,
-             'title': r.title,
-             'price': r.minPrice,
+             'price': r.price,
              'status': r.status,
              'timestamp': r.timestamp,
              'description': r.description,
@@ -389,7 +388,7 @@ def create_offer(request):
                 'request': r,
                 'price': body['price'],
                 'description': body['description'],
-                'timestamp': datetime.now()
+                'timestamp': datetime.now(tz=timezone.utc)
             }
             offer = Offer(**offerDict)
             offer.save()

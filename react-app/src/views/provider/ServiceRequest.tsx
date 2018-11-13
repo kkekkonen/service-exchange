@@ -1,12 +1,21 @@
 import * as React from 'react';
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import Dialog from '@material-ui/core/Dialog';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
+import IconButton from '@material-ui/core/IconButton';
+import Slide from '@material-ui/core/Slide';
+import TextField from '@material-ui/core/TextField';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
 
@@ -22,6 +31,16 @@ const styles = (theme: Theme) =>
     },
     fieldLower: {
 
+    },
+    appBar: {
+      position: 'relative',
+    },
+    flex: {
+      flex: 1,
+    },
+    form: {
+      width: "100%",
+      margin: "20px"
     }
 });
 
@@ -31,15 +50,20 @@ interface IProviderServiceRequestProps extends WithStyles<typeof styles> {
 
 interface IState {
   serviceRequest: IServiceRequest;
+  offerDialogOpen: boolean;
 };
 
+function Transition(props: any) {
+  return <Slide direction="up" {...props} />;
+}
 
-class ProviderServiceRequest extends React.Component<IProviderServiceRequestProps, IState> {
+class ProviderServiceRequest extends React.Component<IProviderServiceRequestProps & RouteComponentProps, IState> {
   public state = {
-    serviceRequest: {} as IServiceRequest
+    serviceRequest: {} as IServiceRequest,
+    offerDialogOpen: false
   };
   private apiService: ApiService;
-  public constructor(props: IProviderServiceRequestProps) {
+  public constructor(props: IProviderServiceRequestProps & RouteComponentProps) {
     super(props);
     this.apiService = new ApiService();
   }
@@ -50,6 +74,38 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
     const { classes } = this.props;
     return (
       <div>
+        <Dialog
+          fullScreen
+          open={this.state.offerDialogOpen}
+          onClose={this.handleCloseOfferDialog}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color="inherit" onClick={this.handleCloseOfferDialog} aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                Make offer
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Grid container spacing={16}>
+            <form className={classes.form} autoComplete="off" onSubmit={event => this.handleOfferSubmit(event, this)}>
+              <FormControl fullWidth={true}>
+                <Grid item xs={12} container spacing={16}>
+                  <Grid item xs={12}>
+                    <TextField fullWidth={true} name="price" label="Offered price" required />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button fullWidth={true} variant="contained" color="primary" className="button" type="submit">Make offer</Button>
+                  </Grid>
+                </Grid>
+              </FormControl>
+            </form>
+          </Grid>
+        </Dialog>
+
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12} container >
             <Grid item md={6} xs={12}>
@@ -91,7 +147,7 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
                     </Button>
                   </Grid>
                   <Grid item xs={12}>
-                    <Button href="#/todo" variant="contained" color="secondary" className="button">
+                    <Button onClick={this.handleClickOpenOfferDialog} variant="contained" color="secondary" className="button">
                       Make offer
                     </Button>
                   </Grid>
@@ -107,6 +163,30 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
       </div>
     );
   }
+
+  private handleClickOpenOfferDialog = () => {
+    this.setState({ offerDialogOpen: true });
+  };
+
+  private handleCloseOfferDialog = () => {
+    this.setState({ offerDialogOpen: false });
+  };
+
+  private handleOfferSubmit(event: any, caller: ProviderServiceRequest) {
+    event.preventDefault();
+    const price = event.target.price.value as number;
+    const description = "";
+    caller.apiService.createServiceRequestOffer(this.props.match.params.id, price, description).then(ok =>
+    {
+      if (ok) {
+        // on success, redirect user to my offers view
+        this.props.history.push('/provider/my_offers');
+        // this.setState({ offerDialogOpen: false });
+      } else {
+        // error
+      }
+    })
+  }
 }
 
-export default withStyles(styles, { withTheme: true })(ProviderServiceRequest);
+export default withRouter(withStyles(styles, { withTheme: true })(ProviderServiceRequest));

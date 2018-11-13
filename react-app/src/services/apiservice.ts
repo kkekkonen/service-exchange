@@ -117,6 +117,22 @@ export class ApiService {
         }).then(res => res.ok)
     }
 
+    public createServiceRequestOffer = (
+        id: number,
+        price: number,
+        description: string
+        ) => {
+        return fetch(this.baseUrl + 'api/create_offer', {
+            credentials: "same-origin",
+            method: 'post',
+            body: JSON.stringify({
+                "id": id,
+                "price": price,
+                "description": description
+            })
+        }).then(res => res.ok)
+    }
+
     public acceptServiceOffer = (id: number) => {
         return fetch(this.baseUrl + 'api/accept_service_offer/' + id, {
             credentials: "same-origin"
