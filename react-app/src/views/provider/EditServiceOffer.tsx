@@ -63,7 +63,7 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
         <Grid className={classes.root} container spacing={16}>
           <form className={classes.form} autoComplete="off" onSubmit={event => this.handleSubmit(event, this)}>
             <FormControl fullWidth={true}>
-              <TextField name="title" label="Title" required value={this.state.serviceOffer.title} onChange={this.handleOfferChange} />
+              <TextField name="title" label="Title" required value={this.state.serviceOffer.title || ''} onChange={this.handleOfferChange} />
             </FormControl>
             <FormControl fullWidth={true}>
               <InputLabel htmlFor="category-simple">Category</InputLabel>
@@ -84,10 +84,10 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
               </Select>
             </FormControl>
             <FormControl fullWidth={true}>
-              <TextField name="minPrice" label="Min price" required value={this.state.serviceOffer.minPrice} onChange={this.handleOfferChange} />
-              <TextField name="maxPrice" label="Max price" required value={this.state.serviceOffer.maxPrice} onChange={this.handleOfferChange} />
-              <TextField name="zipcode" label="Zip code" required value={this.state.serviceOffer.zipcode} onChange={this.handleOfferChange} />
-              <TextField name="description" label="Description" multiline rows="4" required value={this.state.serviceOffer.description} onChange={this.handleOfferChange} />
+              <TextField name="minPrice" label="Min price" required value={this.state.serviceOffer.minPrice || ''} onChange={this.handleOfferChange} />
+              <TextField name="maxPrice" label="Max price" required value={this.state.serviceOffer.maxPrice || ''} onChange={this.handleOfferChange} />
+              <TextField name="zipcode" label="Zip code" required value={this.state.serviceOffer.zipcode || ''} onChange={this.handleOfferChange} />
+              <TextField name="description" label="Description" multiline rows="4" required value={this.state.serviceOffer.description || ''} onChange={this.handleOfferChange} />
               <Button variant="contained" color="primary" className="button" type="submit">Save</Button>
               {this.state.hasError && <FormHelperText>{this.state.errorText}</FormHelperText>}
             </FormControl>
