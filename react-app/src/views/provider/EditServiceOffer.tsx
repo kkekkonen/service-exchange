@@ -75,7 +75,7 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
                 id: 'category-simple',
               }}
               >
-                <MenuItem value="">
+                <MenuItem value={-1}>
                   <em>None</em>
                 </MenuItem>
                 {this.state.categories.map(category => (
@@ -137,8 +137,8 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
       caller.apiService.createServiceOffer(title, categoryId, minPrice, maxPrice, description, zipCode).then(ok =>
       {
         if (ok) {
-          // on success, redirect user back to my services view
-          this.props.history.push('/provider/my_services');
+          // on success, redirect user back to my service offers view
+          this.props.history.push('/provider/my_service_offers');
         } else {
           this.setState({
             hasError: true,

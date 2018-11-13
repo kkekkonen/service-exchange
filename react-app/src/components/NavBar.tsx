@@ -342,10 +342,10 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
             showBackButton: true
           });
           break;
-        case '/consumer/edit_request':
-        this.setState({
-          showBackButton: true
-        });
+        case '/consumer/edit_request/':
+          this.setState({
+            showBackButton: true
+          });
         break;
         default:
           this.setState({
@@ -400,6 +400,8 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           return 'Open requests';
         case '/provider/request/':
           return 'Open requests';
+        case '/consumer/edit_request/':
+          return 'Edit request';
         default:
           return 'Page not found';
       }

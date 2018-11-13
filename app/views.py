@@ -91,11 +91,10 @@ def create_service_offer(request):
         try:
             body_unicode = request.body.decode('utf-8')
             body = json.loads(body_unicode)
-            user = User.objects.get(pk=body['user'])
             category = Category.objects.get(pk=body['category_id'])
             serviceDict = {
                 'title': body['title'],
-                'provider': user,
+                'provider': request.user,
                 'category': category,
                 'minPrice': body['minPrice'],
                 'maxPrice': body['maxPrice'],
