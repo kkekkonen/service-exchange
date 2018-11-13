@@ -114,7 +114,7 @@ def create_service_offer(request):
 def count_pending(offers):
     pending = 0
     for offer in offers:
-        if offer.status == OfferStatus.PENDING:
+        if offer.status == "PENDING":
             pending += 1
     return pending
 
@@ -440,10 +440,10 @@ def accept_service_offer(request, id):
             'provider': serviceOffer.provider,
             'status': 'pending',
             'price': serviceOffer.minPrice,
-            'description': serviceOffer.price,
+            'description': serviceOffer.descriptions,
             'category': serviceOffer.category,
             'zipcode': serviceOffer.zipcode,
-            'status': ServiceStatus.PENDING,
+            'status': "PENDING",
             'rating': 0,                          #ignore rating until status is COMPLETED
             'timestamp': datetime.now()
         }
