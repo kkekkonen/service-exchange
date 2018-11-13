@@ -18,6 +18,7 @@ import MyServiceOffers from './views/provider/MyServiceOffers';
 import Profile from './views/Profile';
 import ProviderAcceptedServices from './views/provider/AcceptedServices';
 import ProviderMain from './views/provider/ProviderMain';
+import ProviderServiceOffer from './views/provider/ServiceOffer';
 import ProviderServiceRequest from './views/provider/ServiceRequest';
 import PublicProfile from './views/PublicProfile';
 import Requests from './views/provider/Requests';
@@ -62,6 +63,7 @@ class App extends React.Component<IAppProps> {
               <Route title="I provide something"exact path='/provider' component={ProviderMain}/>
               <Route title="Available services" path='/consumer/available_services' component={ConsumerServices}/>
               <Route title="Service offer" path='/consumer/serviceoffer/:id' component={ServiceOffer}/>
+              <Route title="Provider Service offer" path='/provider/serviceoffer/:id' component={ProviderServiceOffer}/>
               <Route title="My requests" path='/consumer/my_requests' component={MyRequests}/>
               <Route title="My accepted services" path='/consumer/accepted_services' component={ConsumerAcceptedServices}/>
               <Route title="My accepted services" path='/provider/accepted_services' component={ProviderAcceptedServices}/>
