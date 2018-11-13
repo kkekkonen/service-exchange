@@ -268,13 +268,12 @@ def my_consumer_services(request):
         response = [{
             'id': r.pk,
             'title': r.title,
-            'minPrice': r.minPrice,
-            'maxPrice': r.maxPrice,
+            'price': r.price,
             'category': r.category.category,
             'zipcode': r.zipcode,
             'timestamp': r.timestamp,
-            'consumer': r.consumer,
-            'producer': r.producer,
+            'consumer': r.consumer.get_full_name(),
+            'provider': r.provider.get_full_name(),
             'status': r.status,
             'rating': r.rating,
             'description': r.description
