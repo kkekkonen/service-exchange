@@ -1,11 +1,11 @@
 import * as React from 'react';
 
+import {IServiceRequest, IServiceRequestOffer} from '../../models/models'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import {IServiceRequestOffer} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,12 +30,14 @@ interface IMyOffersProps extends WithStyles<typeof styles> {
 
 interface IState {
   myOffers: IServiceRequestOffer[];
+  serviceRequests: IServiceRequest[];
 };
 
 
 class MyOffers extends React.Component<IMyOffersProps, IState> {
   public state = {
-    myOffers: [] as IServiceRequestOffer[]
+    myOffers: [] as IServiceRequestOffer[],
+    serviceRequests: [] as IServiceRequest[]
   };
   private apiService: ApiService;
   public constructor(props: IMyOffersProps) {
@@ -43,7 +45,16 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyServiceRequestOffers().then(myOffers => this.setState({ myOffers }))
+    this.apiService.getMyServiceRequestOffers().then(myOffers => {
+      this.setState({ myOffers });
+      this.state.myOffers.forEach(offer => {
+        this.apiService.getServiceRequest(offer.requestId).then(request => {
+          const serviceRequests = this.state.serviceRequests;
+          serviceRequests.push(request);
+          this.setState({ serviceRequests });
+        });
+      });
+    })
   }
   public render() {
     const { classes } = this.props;
@@ -58,11 +69,11 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
               </Typography>
               }
               {this.state.myOffers.map(offer => (
-                <ListItem key={offer.id} dense button>
+                <ListItem key={offer.id} dense button component='a' href={`/app/#/provider/request/${offer.requestId}`}>
                   <Avatar>
                     <ImageIcon />
                   </Avatar>
-                  <ListItemText primary={`${offer.price}`} />
+                  <ListItemText primary={`${offer.price}€`} secondary={`${this.state.serviceRequests.find(x => x.id === offer.requestId) ? this.state.serviceRequests.find(x => x.id === offer.requestId)!.title : ''}`} />
                 </ListItem>
               ))}
             </List>
