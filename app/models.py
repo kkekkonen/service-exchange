@@ -5,18 +5,6 @@ from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from enum import Enum
 
-class ServiceStatus(Enum):
-    PENDING = "Pending"
-    STARTED = "Started"
-    CANCELED = "Canceled"
-    COMPLETED = "Completed"
-
-class OfferStatus(Enum):
-    PENDING = "Pending"
-    STARTED = "Accepted"
-    CANCELED = "Canceled"
-    REJECTED = "Rejected"
-
 # Create your models here.
 class Category(models.Model):
     category = models.CharField(max_length=64)
@@ -39,7 +27,13 @@ class Service(models.Model):
     price = models.FloatField(default=0)
     zipcode = models.IntegerField(default=0)
     description = models.TextField(default="")
-    status = [(tag, tag.value) for tag in ServiceStatus]
+    SERVICESTATUS_CHOICES = (
+        ("PENDING", "Pending"),
+        ("STARTED", "Started"),
+        ("CANCELED", "Canceled"),
+        ("COMPLETED", "Completed"),
+    )
+    status = models.CharField(max_length=9, choices=SERVICESTATUS_CHOICES, default="PENDING")
     timestamp = models.DateTimeField(editable=False, default=timezone.now)
     rating = models.FloatField(default=5, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
@@ -58,5 +52,11 @@ class Offer(models.Model):
     request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='offers')
     price = models.FloatField(default=0)
     description = models.TextField(default="")
-    status = [(tag, tag.value) for tag in OfferStatus]
+    OFFERSTATUS_CHOICES = (
+        ("PENDING", "Pending"),
+        ("STARTED", "Accepted"),
+        ("CANCELED", "Canceled"),
+        ("REJECTED", "Rejected"),
+    )
+    status = models.CharField(max_length=8, choices=OFFERSTATUS_CHOICES, default="PENDING")
     timestamp = models.DateTimeField(editable=False, default=timezone.now)
