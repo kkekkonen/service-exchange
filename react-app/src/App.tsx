@@ -59,6 +59,7 @@ class App extends React.Component<IAppProps> {
     this.apiService = new ApiService();
   }
   public componentWillMount() {
+    document.title = "Favor.io"
     this.apiService.getLoggedUserProfile().then(userProfile => {
       this.setState({ loggedIn: true });
       }
