@@ -49,7 +49,6 @@ class Profile extends React.Component<IUserProfileProps, IState> {
   }
 
   public render() {
-    console.log('render', this.state)
     const { classes } = this.props;
     return (
       <div className="Main">

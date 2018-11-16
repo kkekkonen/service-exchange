@@ -41,7 +41,8 @@ export interface IUserProfile
     username: string,
     firstName: string,
     lastName: string,
-    email: string
+    email: string,
+    password: string,
 }
 
 export interface IServiceRequestOffer
