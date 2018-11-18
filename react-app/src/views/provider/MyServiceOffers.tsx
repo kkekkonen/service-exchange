@@ -6,11 +6,14 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import {IServiceOffer} from '../../models/models'
+import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
@@ -65,6 +68,11 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
                     <ImageIcon />
                   </Avatar>
                   <ListItemText primary={`${serviceOffer.title}`} />
+                  <ListItemSecondaryAction>
+                    <IconButton aria-label="Edit" href={`/app/#/provider/edit_service_offer/${serviceOffer.id}`}>
+                      <EditIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>

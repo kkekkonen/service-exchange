@@ -6,8 +6,10 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
+import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -25,6 +27,24 @@ const styles = (theme: Theme) =>
       position: 'absolute',
       bottom: theme.spacing.unit * 2,
       right: theme.spacing.unit * 2,
+    },
+    center: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    badge: {
+      backgroundColor: '#0D9C6F',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '100%',
+      textAlign: 'center',
+      display: 'flex',
+      width: '28px',
+      height: '28px',
+      textDecoration: 'none',
+      fontWeight: 'bold',
+      color: '#fff'
     }
 });
 
@@ -66,8 +86,11 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
                   <ImageIcon />
                 </Avatar>
                 <ListItemText primary={`${request.title}`} />
-                <ListItemSecondaryAction>
-                  {request.pending > 0 && <em>{request.pending}</em>}
+                <ListItemSecondaryAction className={classes.center}>
+                  {request.pending > 0 && <em className={classes.badge}>{request.pending}</em>}
+                  <IconButton aria-label="Edit" href={`/app/#/consumer/edit_request/${request.id}`}>
+                    <EditIcon />
+                  </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
