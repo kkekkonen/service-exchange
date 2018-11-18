@@ -94,7 +94,7 @@ class Service extends React.Component<IServiceProps, IState> {
                   Accepted price
                 </div>
                 <div className={classes.fieldLower}>
-                  {this.state.service.price}€
+                  {this.state.service.price} €
                 </div>
               </div>
             </Grid>

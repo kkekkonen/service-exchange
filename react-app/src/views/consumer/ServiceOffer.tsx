@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
@@ -37,20 +38,33 @@ interface IServiceOfferProps extends WithStyles<typeof styles> {
 
 interface IState {
   serviceOffer: IServiceOffer;
+  hasError: boolean;
+  errorText: string;
 };
 
 
-class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
+class ServiceOffer extends React.Component<IServiceOfferProps & RouteComponentProps, IState> {
   public state = {
-    serviceOffer: {} as IServiceOffer
+    serviceOffer: {} as IServiceOffer,
+    hasError: false,
+    errorText: ""
   };
   private apiService: ApiService;
-  public constructor(props: IServiceOfferProps) {
+  public constructor(props: IServiceOfferProps & RouteComponentProps) {
     super(props);
     this.apiService = new ApiService();
   }
   public Button_Click(id:number): void {
-    this.apiService.acceptServiceOffer(id)
+    this.apiService.acceptServiceOffer(id).then(ok => {
+      if (ok) {
+        this.props.history.push('/consumer/accepted_services');
+      } else {
+        this.setState({
+          hasError: true,
+          errorText: "You have already accepted this service."
+        });
+      }
+    })
   }
   public componentDidMount(){
     this.apiService.getServiceOffer(this.props.match.params.id).then(serviceOffer => this.setState({ serviceOffer }))
@@ -113,6 +127,7 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                     Accept deal ({this.state.serviceOffer.minPrice} €)
                   </Button>
                 </Grid>
+                {this.state.hasError && <Grid item xs={12}>{this.state.errorText}</Grid>}
               </Grid>
             </Grid>
           </Grid>
@@ -132,4 +147,4 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ServiceOffer);
+export default withRouter(withStyles(styles, { withTheme: true })(ServiceOffer));
