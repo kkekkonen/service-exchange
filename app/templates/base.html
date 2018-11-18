@@ -15,7 +15,8 @@
 
     <nav>
       <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Favor.io</a>
+        <a href="/" class="brand-logo hide-on-large-only">Favor.io</a>
+        <a href="/" class="brand-logo brand-logo-desktop hide-on-med-and-down">Favor.io</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           {% if user.is_authenticated %}    
             <li><a href="app/#/profile">{{ user.username }}</a></li>
@@ -28,13 +29,14 @@
       </div>
     </nav>
 
-    <div class="container">
+    {% block full_width_content %}
 
-      <div class="">
+    {% endblock %}
+
+    <div class="container">
         {% block content %}
 
         {% endblock %}
-      </div>
     </div><!-- /.container -->
 
     <footer class="page-footer">
