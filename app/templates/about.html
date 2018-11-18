@@ -2,11 +2,23 @@
 
 {% block content %}
 
-<div>TODO:</div>
+<h1>About Us</h1>
+
+<p>We offer a service exchange platform.</p>
+<p>Nowadays people are becoming increasingly busy with their ordinary 
+    life due to several reasons, such as increased requirements from work life or school.
+     This can lead to a situation where small tasks build up and cause stress
+      when there are no helping hands. We provide a service exchange
+       platform where people can easily exchange small services with other
+        people. This platform consists of two parties; the people who
+         need some service and the people who can provide their services. 
+         Using our platform these two parties can find each other and find
+          a suitable deal for the service that satisfies both.</p>
+
+<h5 class="black-text">Links</h5>
 <ul>
-    <li>Small description about this site.</li>
-    <li>Privacy Policy.</li>
-    <li>Terms of service</li>
+    <li><a class="black-text text-lighten-1" href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+    <li><a class="black-text text-lighten-1" href="{% url 'terms_of_service' %}">Terms of Service</a></li>
 </ul>
 
 {% endblock %}
