@@ -60,8 +60,12 @@ const styles = (theme: Theme) =>
     alignItems: 'center',
     justifyContent: 'center'
   },
+  logoarea: {
+    backgroundColor: '#0D9C6F'
+  },
   logo: {
-    margin: 0
+    margin: 0,
+    color: '#fff'
   },
   drawerPaper: {
     width: drawerWidth,
@@ -116,7 +120,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
 
       const drawer = (
         <div>
-          <div className={classes.toolbar + ' ' + classes.center}>
+          <div className={classes.toolbar + ' ' + classes.center + ' ' + classes.logoarea}>
             <Typography className={classes.logo} variant="h4" gutterBottom align="center">
               Favor.io
             </Typography>
