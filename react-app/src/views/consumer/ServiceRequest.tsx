@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import {IServiceRequest, IServiceRequestOffer} from '../../models/models'
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
@@ -28,10 +28,16 @@ const styles = (theme: Theme) =>
       marginBottom: "10px"
     },
     fieldUpper: {
-      fontWeight: "bold"
+      fontWeight: "normal",
+      color: "#0D9C6F"
     },
     fieldLower: {
 
+    },
+    detailsBox: {
+      padding: "1em",
+      backgroundColor: "#eee",
+      borderRadius: "4px"
     }
 });
 
@@ -125,7 +131,7 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
               </div>
             </Grid>
             <Grid item md={6} xs={12}>
-              <Grid item xs={12} container spacing={16}>
+              <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
                 {!this.state.serviceRequest.isOwner &&
                 <Grid container spacing={16}>
                   <Grid item xs={12}>
@@ -151,7 +157,14 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            {this.state.serviceRequest.description}
+            <div className={classes.field}>
+              <div className={classes.fieldUpper}>
+                Description
+              </div>
+              <div className={classes.fieldLower}>
+                {this.state.serviceRequest.description}
+              </div>
+            </div>
           </Grid>
           <Grid item xs={12}>
           <Typography variant="h5" gutterBottom>

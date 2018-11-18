@@ -18,10 +18,16 @@ const styles = (theme: Theme) =>
       marginBottom: "10px"
     },
     fieldUpper: {
-      fontWeight: "bold"
+      fontWeight: "normal",
+      color: "#0D9C6F"
     },
     fieldLower: {
 
+    },
+    detailsBox: {
+      padding: "1em",
+      backgroundColor: "#eee",
+      borderRadius: "4px"
     }
 });
 
@@ -83,9 +89,17 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                   {this.state.serviceOffer.timestamp}
                 </div>
               </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Price
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceOffer.minPrice} €
+                </div>
+              </div>
             </Grid>
             <Grid item md={6} xs={12}>
-              <Grid item xs={12} container spacing={16}>
+              <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
                 <Grid item xs={12}>
                   {this.state.serviceOffer.provider}
                 </Grid>
@@ -103,7 +117,14 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            {this.state.serviceOffer.description}
+            <div className={classes.field}>
+              <div className={classes.fieldUpper}>
+                Description
+              </div>
+              <div className={classes.fieldLower}>
+                {this.state.serviceOffer.description}
+              </div>
+            </div>
           </Grid>
         </Grid>
       </div>
