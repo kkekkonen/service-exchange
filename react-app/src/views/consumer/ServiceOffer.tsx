@@ -110,7 +110,7 @@ class ServiceOffer extends React.Component<IServiceOfferProps, IState> {
                 </Grid>
                 <Grid item xs={12}>
                   <Button onClick={ () => this.Button_Click(this.state.serviceOffer.id)} variant="contained" color="primary" className="button">
-                    Accept deal
+                    Accept deal ({this.state.serviceOffer.minPrice} €)
                   </Button>
                 </Grid>
               </Grid>

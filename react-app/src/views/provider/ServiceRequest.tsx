@@ -142,6 +142,14 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
                   {this.state.serviceRequest.timestamp}
                 </div>
               </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Wanted price range
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceRequest.minPrice}€ - {this.state.serviceRequest.maxPrice}€
+                </div>
+              </div>
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
