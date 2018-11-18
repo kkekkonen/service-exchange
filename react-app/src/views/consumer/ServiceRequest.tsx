@@ -132,20 +132,6 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
-                {!this.state.serviceRequest.isOwner &&
-                <Grid container spacing={16}>
-                  <Grid item xs={12}>
-                    <Button href="#/todo" variant="contained" color="secondary" className="button">
-                      View profile
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button href="#/todo" variant="contained" color="secondary" className="button">
-                      Make offer
-                    </Button>
-                  </Grid>
-                </Grid>
-                }
                 {this.state.serviceRequest.isOwner &&
                 <Grid item xs={12}>
                   <Button href={"#/consumer/edit_request/"+this.props.match.params.id} variant="contained" color="primary" className="button">

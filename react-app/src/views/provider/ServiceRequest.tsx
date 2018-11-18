@@ -153,7 +153,7 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
                     </Button>
                   </Grid>
                   <Grid item xs={12}>
-                    <Button onClick={this.handleClickOpenOfferDialog} variant="contained" color="secondary" className="button">
+                    <Button onClick={this.handleClickOpenOfferDialog} variant="contained" color="primary" className="button">
                       Make offer
                     </Button>
                   </Grid>
