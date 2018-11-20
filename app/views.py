@@ -212,7 +212,7 @@ def service(request, id):
 @csrf_exempt
 def all_service_offers(request):
     if(request.method == "GET"):
-        ServiceOffers = ServiceOffer.objects.all()
+        ServiceOffers = ServiceOffer.objects.filter(~Q(provider=request.user)).all()
         response = [{
             'id': r.pk,
             'title': r.title,
