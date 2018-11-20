@@ -168,6 +168,40 @@ export class ApiService {
         }).then(res => res.ok)
     }
 
+    public editProfile = (
+        username: string,
+        firstName: string,
+        lastName: string,
+        email: string
+        ) => {
+        return fetch(this.baseUrl + 'api/edit_profile', {
+            credentials: "same-origin",
+            method: 'put',
+            body: JSON.stringify({
+                "username": username,
+                "first_name": firstName,
+                "last_name": lastName,
+                "email": email
+            })
+        }).then(res => res.ok)
+    }
+
+    public editPassword = (
+        password: string,
+        newPassword1: string,
+        newPassword2: string
+        ) => {
+        return fetch(this.baseUrl + 'api/change_password', {
+            credentials: "same-origin",
+            method: 'put',
+            body: JSON.stringify({
+                "password": password,
+                "newPassword1": newPassword1,
+                "newPassword2": newPassword2
+            })
+        }).then(res => res.ok)
+    }
+
     public editServiceRequest = (
         title: string,
         categoryId: number,

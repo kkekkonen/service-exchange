@@ -566,3 +566,37 @@ def edit_service_offer(request):
         return HttpResponse(status=403)
     else:
         return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def edit_profile(request):
+    if request.method == "PUT":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        user = request.user
+        user.username = body['username']
+        user.first_name = body['first_name']
+        user.last_name = body['last_name']
+        user.email = body['email']
+        user.save()
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def change_password(request):
+    if request.method == "PUT":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        user = request.user
+        password = body['password']
+        newPassword1 = body['newPassword1']
+        newPassword2 = body['newPassword2']
+        if user.check_password(password) and newPassword1 == newPassword2:
+            user.set_password(newPassword1)
+            user.save()
+            return HttpResponse(status=200)
+        return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=405)
