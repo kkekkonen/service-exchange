@@ -71,7 +71,7 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
                 id: 'category-simple',
               }}
               >
-                <MenuItem value="">
+                <MenuItem value={-1}>
                   <em>None</em>
                 </MenuItem>
                 {this.state.categories.map(category => (
