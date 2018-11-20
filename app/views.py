@@ -600,3 +600,39 @@ def change_password(request):
         return HttpResponse(status=400)
     else:
         return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def delete_request(request, id):
+    if request.method == "DELETE":
+        service_request = get_object_or_404(Request, pk=id)
+        if(service_request.consumer == request.user):
+            service_request.delete()
+            return HttpResponse(status=200)
+        return HttpResponse(status=403)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def delete_request_offer(request, id):
+    if request.method == "DELETE":
+        offer = get_object_or_404(Offer, pk=id)
+        if(offer.provider == request.user):
+            offer.delete()
+            return HttpResponse(status=200)
+        return HttpResponse(status=403)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def delete_service_offer(request, id):
+    if request.method == "DELETE":
+        service_offer = get_object_or_404(ServiceOffer, pk=id)
+        if(service_offer.provider == request.user):
+            service_offer.delete()
+            return HttpResponse(status=200)
+        return HttpResponse(status=403)
+    else:
+        return HttpResponse(status=405)

@@ -80,9 +80,9 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
               </Select>
             </FormControl>
             <FormControl fullWidth={true}>
-              <TextField name="min_price" label="Min price" required />
-              <TextField name="max_price" label="Max price" required />
-              <TextField name="zip_code" label="Zip code" required />
+              <TextField name="min_price" type="number" label="Min price" required />
+              <TextField name="max_price" type="number" label="Max price" required />
+              <TextField name="zip_code" type="number" label="Zip code" required />
               <TextField name="description" label="Description" multiline rows="4" required />
               <Button variant="contained" color="primary" className="button" type="submit">Save</Button>
               {this.state.hasError && <FormHelperText>{this.state.errorText}</FormHelperText>}

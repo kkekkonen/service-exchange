@@ -53,4 +53,7 @@ urlpatterns = [
     path('api/edit_request', views.edit_request),                                               #edit request                               PUT
     path('api/edit_service_offer', views.edit_service_offer),                                   #edit serviceoffer                          PUT
     path('api/edit_profile', views.edit_profile),                                               #edit profile                               PUT
+    path('api/delete_request/<int:id>', views.delete_request),                                  #delete request                             PUT 
+    path('api/delete_service_offer/<int:id>', views.delete_service_offer),                      #delete serviceoffer                        DELETE
+    path('api/delete_request_offer/<int:id>', views.delete_request_offer),                      #edit requestoffer                          DELETE
 ]

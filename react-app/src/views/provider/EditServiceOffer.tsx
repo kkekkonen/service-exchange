@@ -84,9 +84,9 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
               </Select>
             </FormControl>
             <FormControl fullWidth={true}>
-              <TextField name="minPrice" label="Min price" required value={this.state.serviceOffer.minPrice || ''} onChange={this.handleOfferChange} />
-              <TextField name="maxPrice" label="Max price" required value={this.state.serviceOffer.maxPrice || ''} onChange={this.handleOfferChange} />
-              <TextField name="zipcode" label="Zip code" required value={this.state.serviceOffer.zipcode || ''} onChange={this.handleOfferChange} />
+              <TextField name="minPrice" type="number" label="Min price" required value={this.state.serviceOffer.minPrice || ''} onChange={this.handleOfferChange} />
+              <TextField name="maxPrice" type="number" label="Max price" required value={this.state.serviceOffer.maxPrice || ''} onChange={this.handleOfferChange} />
+              <TextField name="zipcode" type="number" label="Zip code" required value={this.state.serviceOffer.zipcode || ''} onChange={this.handleOfferChange} />
               <TextField name="description" label="Description" multiline rows="4" required value={this.state.serviceOffer.description || ''} onChange={this.handleOfferChange} />
               <Button variant="contained" color="primary" className="button" type="submit">Save</Button>
               {this.state.hasError && <FormHelperText>{this.state.errorText}</FormHelperText>}

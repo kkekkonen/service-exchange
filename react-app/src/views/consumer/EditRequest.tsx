@@ -82,9 +82,9 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
               </Select>
             </FormControl>
             <FormControl fullWidth={true}>
-              <TextField name="minPrice" onChange={this.handleRequestChange} value={this.state.request.minPrice || ''} label="Min price" required />
-              <TextField name="maxPrice" onChange={this.handleRequestChange} value={this.state.request.maxPrice || ''} label="Max price" required />
-              <TextField name="zipcode" onChange={this.handleRequestChange} value={this.state.request.zipcode || ''} label="Zip code" required />
+              <TextField name="minPrice" type="number" onChange={this.handleRequestChange} value={this.state.request.minPrice || ''} label="Min price" required />
+              <TextField name="maxPrice" type="number" onChange={this.handleRequestChange} value={this.state.request.maxPrice || ''} label="Max price" required />
+              <TextField name="zipcode" type="number" onChange={this.handleRequestChange} value={this.state.request.zipcode || ''} label="Zip code" required />
               <TextField name="description" onChange={this.handleRequestChange} value={this.state.request.description || ''} label="Description" multiline rows="4" required />
               <Button variant="contained" color="primary" className="button" type="submit">Save</Button>
               {this.state.hasError && <FormHelperText>{this.state.errorText}</FormHelperText>}

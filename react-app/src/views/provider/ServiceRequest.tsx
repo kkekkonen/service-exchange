@@ -101,7 +101,7 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
               <FormControl fullWidth={true}>
                 <Grid item xs={12} container spacing={16}>
                   <Grid item xs={12}>
-                    <TextField fullWidth={true} name="price" label="Offered price" required />
+                    <TextField fullWidth={true} name="price" type="number" label="Offered price" required />
                   </Grid>
                   <Grid item xs={12}>
                     <Button fullWidth={true} variant="contained" color="primary" className="button" type="submit">Make offer</Button>
