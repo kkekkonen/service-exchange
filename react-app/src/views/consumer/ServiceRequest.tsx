@@ -147,6 +147,16 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
                   </Button>
                 </Grid>
                 }
+                {this.state.serviceRequest.isOwner &&
+                <Grid item xs={12}>
+                  <Button onClick={() => this.deleteRequest()} variant="contained" color="primary" className="button" style= {
+                  {
+                    backgroundColor: '#ff1744',
+                  }}>
+                    Delete
+                  </Button>
+                </Grid>
+                }
               </Grid>
             </Grid>
           </Grid>
@@ -191,6 +201,19 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
         </Grid>
       </div>
     );
+  }
+
+  private deleteRequest(): void {
+    this.apiService.deleteServiceRequest(this.state.serviceRequest.id).then(ok => {
+      if (ok) {
+        this.props.history.goBack();
+      } else {
+        this.setState({
+          hasError: true,
+          errorText: "Delete was not succesful."
+        });
+      }
+    });
   }
 }
 export default withRouter(withStyles(styles, { withTheme: true })(ServiceRequest));

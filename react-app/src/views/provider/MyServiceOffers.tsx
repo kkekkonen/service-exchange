@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import {IServiceOffer} from '../../models/models'
@@ -72,6 +73,9 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
                     <IconButton aria-label="Edit" href={`/app/#/provider/edit_service_offer/${serviceOffer.id}`}>
                       <EditIcon />
                     </IconButton>
+                    <IconButton aria-label="Delete" onClick={() => this.deleteServiceOffer(serviceOffer.id)}>
+                      <DeleteForeverIcon />
+                    </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
               ))}
@@ -83,6 +87,20 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
         </Grid>
       </div>
     );
+  }
+
+  private deleteServiceOffer(id:number): void {
+    this.apiService.deleteServiceOffer(id).then(ok => {
+      if (ok) {
+        const myServiceOffers = this.state.myServiceOffers;
+        const offer = myServiceOffers.find(r => r.id === id)!;
+        const deleteIdx = myServiceOffers.indexOf(offer);
+        myServiceOffers.splice(deleteIdx, 1);
+        this.setState({
+          myServiceOffers
+        });
+      }
+    });
   }
 }
 
