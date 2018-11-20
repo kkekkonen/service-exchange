@@ -40,7 +40,7 @@ class Requests extends React.Component<IRequestsProps, IState> {
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getAllServiceRequests().then(serviceRequests => this.setState({ serviceRequests }))
+    this.apiService.getAllServiceRequests().then(serviceRequests => this.setState({ serviceRequests, isLoading: false }))
   }
   public render() {
     const { classes } = this.props;

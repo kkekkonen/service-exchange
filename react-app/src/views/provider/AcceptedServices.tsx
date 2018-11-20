@@ -41,7 +41,7 @@ class ProviderAcceptedServices extends React.Component<IProviderAcceptedServices
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyProviderServices().then(services => this.setState({ services }))
+    this.apiService.getMyProviderServices().then(services => this.setState({ services, isLoading: false }))
   }
   public render() {
     const { classes } = this.props;

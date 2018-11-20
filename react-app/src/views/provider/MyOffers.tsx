@@ -52,7 +52,7 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
   }
   public componentDidMount(){
     this.apiService.getMyServiceRequestOffers().then(myOffers => {
-      this.setState({ myOffers });
+      this.setState({ myOffers, isLoading: false });
       this.state.myOffers.forEach(offer => {
         this.apiService.getServiceRequest(offer.requestId).then(request => {
           const serviceRequests = this.state.serviceRequests;

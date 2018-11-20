@@ -52,7 +52,7 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyServiceOffers().then(myServiceOffers => this.setState({ myServiceOffers }))
+    this.apiService.getMyServiceOffers().then(myServiceOffers => this.setState({ myServiceOffers, isLoading: false }))
   }
   public render() {
     const { classes } = this.props;

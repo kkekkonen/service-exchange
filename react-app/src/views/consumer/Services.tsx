@@ -43,7 +43,7 @@ class ConsumerServices extends React.Component<IConsumerServicesProps, IState> {
   }
   public componentDidMount(){
     this.apiService.getCategories().then(categories => this.setState({ categories }))
-    this.apiService.getAllServiceOffers().then(serviceOffers => this.setState({ serviceOffers }))
+    this.apiService.getAllServiceOffers().then(serviceOffers => this.setState({ serviceOffers, isLoading: false }))
   }
   public render() {
     const { classes } = this.props;
