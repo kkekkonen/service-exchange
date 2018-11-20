@@ -111,13 +111,14 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
       });
       return;
     }
+    const id = this.props.match.params.id as number;
     const title = this.state.request.title;
     const categoryId = event.target.categoryid.value as number;
     const minPrice = this.state.request.minPrice as number;
     const maxPrice = this.state.request.maxPrice as number;
     const zipCode = this.state.request.zipcode as number;
     const description = this.state.request.description;
-    caller.apiService.editServiceRequest(title, categoryId, minPrice, maxPrice, description, zipCode).then(ok =>
+    caller.apiService.editServiceRequest(title, categoryId, minPrice, maxPrice, description, zipCode, id).then(ok =>
     {
       if (ok) {
         this.props.history.push('/consumer/my_requests');

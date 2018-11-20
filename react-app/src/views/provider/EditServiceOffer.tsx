@@ -121,7 +121,8 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
     const description = event.target.description.value;
 
     if (this.state.serviceOffer.id) {
-      caller.apiService.editServiceOffer(title, categoryId, minPrice, maxPrice, description, zipCode).then(ok =>
+      const id = this.state.serviceOffer.id as number;
+      caller.apiService.editServiceOffer(title, categoryId, minPrice, maxPrice, description, zipCode, id).then(ok =>
         {
           if (ok) {
             // on success, redirect user back to my service offer view

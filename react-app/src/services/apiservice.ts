@@ -151,11 +151,13 @@ export class ApiService {
         minPrice: number,
         maxPrice: number,
         description: string,
-        zipCode: number) => {
+        zipCode: number,
+        id: number) => {
         return fetch(this.baseUrl + 'api/edit_service_offer', {
             credentials: "same-origin",
-            method: 'post',
+            method: 'put',
             body: JSON.stringify({
+                "id": id,
                 "title": title,
                 "category_id": categoryId,
                 "minPrice": minPrice,
@@ -172,17 +174,19 @@ export class ApiService {
         minPrice: number,
         maxPrice: number,
         description: string,
-        zipCode: number) => {
+        zipCode: number,
+        id: number) => {
         return fetch(this.baseUrl + 'api/edit_request', {
             credentials: "same-origin",
-            method: 'update',
+            method: 'put',
             body: JSON.stringify({
                 "title": title,
                 "category_id": categoryId,
                 "minPrice": minPrice,
                 "maxPrice": maxPrice,
                 "description": description,
-                "zipcode": zipCode
+                "zipcode": zipCode,
+                "id": id
             })
         }).then(res => res.ok)
     }

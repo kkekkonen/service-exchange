@@ -525,3 +525,44 @@ def user_profile(request, id):
 def logout(request):
     auth_logout(request)
     return redirect('landing')
+
+@csrf_exempt
+@login_required
+def edit_request(request):
+    if request.method == "PUT":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        service_request = get_object_or_404(Request, pk=body['id'])
+        category = get_object_or_404(Category, pk=body['category_id'])
+        if(request.user == service_request.consumer):
+            service_request.title = body['title']
+            service_request.category = category
+            service_request.maxPrice = body['maxPrice']
+            service_request.minPrice = body['minPrice']
+            service_request.description = body['description']
+            service_request.zipcode = body['zipcode']
+            service_request.save()
+            return HttpResponse(status=200)
+        return HttpResponse(status=403)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+@login_required
+def edit_service_offer(request):
+    if request.method == "PUT":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        service_offer = get_object_or_404(ServiceOffer, pk=body['id'])
+        category = get_object_or_404(Category, pk=body['category_id'])
+        if(request.user == service_offer.provider):
+            service_offer.title = body['title']
+            service_offer.category = category
+            service_offer.minPrice = body['minPrice']
+            service_offer.description = body['description']
+            service_offer.zipcode = body['zipcode']
+            service_offer.save()
+            return HttpResponse(status=200)
+        return HttpResponse(status=403)
+    else:
+        return HttpResponse(status=405)

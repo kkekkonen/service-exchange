@@ -50,4 +50,6 @@ urlpatterns = [
     path('api/accept_offer/<int:id>', views.accept_offer),                                      #accept offer                               GET
     path('api/accept_service_offer/<int:id>', views.accept_service_offer),                      #accept serviceoffer                        GET
     path('api/decline_offer/<int:id>', views.decline_offer),                                    #decline offer                              GET
+    path('api/edit_request', views.edit_request),                                               #edit request                               PUT
+    path('api/edit_service_offer', views.edit_service_offer),                                   #edit serviceoffer                          PUT
 ]
