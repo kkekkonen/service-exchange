@@ -82,6 +82,7 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
                   </Avatar>
                   <ListItemText primary={`${offer.price}€`} secondary={`${this.state.serviceRequests.find(x => x.id === offer.requestId) ? this.state.serviceRequests.find(x => x.id === offer.requestId)!.title : ''}`} />
                   <ListItemSecondaryAction>
+                    {offer.status}
                     <IconButton aria-label="Delete" onClick={() => this.deleteOffer(offer.id)}>
                       <DeleteForeverIcon />
                     </IconButton>

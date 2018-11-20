@@ -187,11 +187,11 @@ class ServiceRequest extends React.Component<IServiceRequestProps & RouteCompone
                   </Avatar>
                   <ListItemText primary={`${offer.price}€`} secondary={offer.provider}/>
                   <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete">
-                        <CancelIcon onClick={ () => this.decline_offer(offer.id)} />
+                      <IconButton aria-label="Accept" onClick={ () => this.accept_offer(offer.id)}>
+                        <CheckIcon />
                       </IconButton>
-                      <IconButton aria-label="Delete">
-                        <CheckIcon onClick={ () => this.accept_offer(offer.id)} />
+                      <IconButton aria-label="Decline" onClick={ () => this.decline_offer(offer.id)}>
+                        <CancelIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
