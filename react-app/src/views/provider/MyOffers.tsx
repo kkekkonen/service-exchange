@@ -31,13 +31,15 @@ const styles = (theme: Theme) =>
       backgroundColor: "#ff9100",
       color: "#fff",
       borderRadius: "4px",
-      padding: "0.5em"
+      padding: "0.5em",
+      fontSize: "12px"
     },
     rejected: {
       backgroundColor: "#ff1744",
       color: "#fff",
       borderRadius: "4px",
-      padding: "0.5em"
+      padding: "0.5em",
+      fontSize: "12px"
     }
 });
 
