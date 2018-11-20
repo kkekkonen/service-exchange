@@ -90,6 +90,14 @@ class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps & 
                   {this.state.serviceOffer.timestamp}
                 </div>
               </div>
+              <div className={classes.field}>
+                <div className={classes.fieldUpper}>
+                  Price
+                </div>
+                <div className={classes.fieldLower}>
+                  {this.state.serviceOffer.minPrice} €
+                </div>
+              </div>
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
