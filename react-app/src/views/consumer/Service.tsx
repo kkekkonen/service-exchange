@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
@@ -40,12 +41,12 @@ interface IState {
 };
 
 
-class Service extends React.Component<IServiceProps, IState> {
+class Service extends React.Component<IServiceProps & RouteComponentProps, IState> {
   public state = {
     service: {} as IService
   };
   private apiService: ApiService;
-  public constructor(props: IServiceProps) {
+  public constructor(props: IServiceProps & RouteComponentProps) {
     super(props);
     this.apiService = new ApiService();
   }
@@ -99,6 +100,7 @@ class Service extends React.Component<IServiceProps, IState> {
               </div>
             </Grid>
             <Grid item md={6} xs={12}>
+              {this.props.location.pathname.includes("consumer") &&
               <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
                 <Grid item xs={12}>
                   {this.state.service.provider}
@@ -109,6 +111,19 @@ class Service extends React.Component<IServiceProps, IState> {
                   </Button>
                 </Grid>
               </Grid>
+              }
+              {this.props.location.pathname.includes("provider") &&
+              <Grid item xs={12} container spacing={16} className={classes.detailsBox}>
+                <Grid item xs={12}>
+                  {this.state.service.consumer}
+                </Grid>
+                <Grid item xs={12}>
+                  <Button href={`/app/#/publicprofile/${this.state.service.consumerid}`} variant="contained" color="secondary" className="button">
+                    View profile
+                  </Button>
+                </Grid>
+              </Grid>
+              }
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -127,4 +142,4 @@ class Service extends React.Component<IServiceProps, IState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Service);
+export default withRouter(withStyles(styles, { withTheme: true })(Service));
