@@ -26,6 +26,18 @@ const styles = (theme: Theme) =>
       position: 'absolute',
       bottom: theme.spacing.unit * 2,
       right: theme.spacing.unit * 2,
+    },
+    pending: {
+      backgroundColor: "#ff9100",
+      color: "#fff",
+      borderRadius: "4px",
+      padding: "0.5em"
+    },
+    rejected: {
+      backgroundColor: "#ff1744",
+      color: "#fff",
+      borderRadius: "4px",
+      padding: "0.5em"
     }
 });
 
@@ -82,7 +94,8 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
                   </Avatar>
                   <ListItemText primary={`${offer.price}€`} secondary={`${this.state.serviceRequests.find(x => x.id === offer.requestId) ? this.state.serviceRequests.find(x => x.id === offer.requestId)!.title : ''}`} />
                   <ListItemSecondaryAction>
-                    {offer.status}
+                    {offer.status === "PENDING" && <span className={classes.pending}>{offer.status}</span>}
+                    {offer.status === "REJECTED" && <span className={classes.rejected}>{offer.status}</span>}
                     <IconButton aria-label="Delete" onClick={() => this.deleteOffer(offer.id)}>
                       <DeleteForeverIcon />
                     </IconButton>
