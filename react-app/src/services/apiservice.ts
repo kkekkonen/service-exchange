@@ -102,6 +102,27 @@ export class ApiService {
 
     }
 
+    public deleteServiceRequest = (id: number) => {
+        return fetch(this.baseUrl + 'api/delete_request/' + id, {
+            credentials: "same-origin",
+            method: 'delete'
+        }).then(res => res.ok)
+    }
+
+    public deleteServiceOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/delete_service_offer/' + id, {
+            credentials: "same-origin",
+            method: 'delete'
+        }).then(res => res.ok)
+    }
+
+    public deleteServiceRequestOffer = (id: number) => {
+        return fetch(this.baseUrl + 'api/delete_request_offer/' + id, {
+            credentials: "same-origin",
+            method: 'delete'
+        }).then(res => res.ok)
+    }
+
     public createServiceRequest = (
         title: string,
         categoryId: number,

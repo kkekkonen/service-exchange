@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
@@ -40,12 +41,12 @@ interface IState {
 };
 
 
-class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps, IState> {
+class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps & RouteComponentProps, IState> {
   public state = {
     serviceOffer: {} as IServiceOffer
   };
   private apiService: ApiService;
-  public constructor(props: IProviderServiceOfferProps) {
+  public constructor(props: IProviderServiceOfferProps & RouteComponentProps) {
     super(props);
     this.apiService = new ApiService();
   }
@@ -97,6 +98,14 @@ class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps, I
                     Edit
                   </Button>
                 </Grid>
+                <Grid item xs={12}>
+                  <Button onClick={() => this.deleteServiceOffer()} variant="contained" color="primary" className="button" style= {
+                  {
+                    backgroundColor: '#ff1744',
+                  }}>
+                    Delete
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -114,6 +123,14 @@ class ProviderServiceOffer extends React.Component<IProviderServiceOfferProps, I
       </div>
     );
   }
+
+  private deleteServiceOffer(): void {
+    this.apiService.deleteServiceOffer(this.state.serviceOffer.id).then(ok => {
+      if (ok) {
+        this.props.history.goBack();
+      }
+    });
+  }
 }
 
-export default withStyles(styles, { withTheme: true })(ProviderServiceOffer);
+export default withRouter(withStyles(styles, { withTheme: true })(ProviderServiceOffer));

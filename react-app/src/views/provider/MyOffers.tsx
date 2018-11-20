@@ -5,10 +5,13 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
@@ -74,6 +77,11 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
                     <ImageIcon />
                   </Avatar>
                   <ListItemText primary={`${offer.price}€`} secondary={`${this.state.serviceRequests.find(x => x.id === offer.requestId) ? this.state.serviceRequests.find(x => x.id === offer.requestId)!.title : ''}`} />
+                  <ListItemSecondaryAction>
+                    <IconButton aria-label="Delete" onClick={() => this.deleteOffer(offer.id)}>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>
@@ -81,6 +89,20 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
         </Grid>
       </div>
     );
+  }
+
+  private deleteOffer(id:number): void {
+    this.apiService.deleteServiceRequestOffer(id).then(ok => {
+      if (ok) {
+        const myOffers = this.state.myOffers;
+        const offer = myOffers.find(o => o.id === id)!;
+        const deleteIdx = myOffers.indexOf(offer);
+        myOffers.splice(deleteIdx, 1);
+        this.setState({
+          myOffers
+        });
+      }
+    });
   }
 }
 

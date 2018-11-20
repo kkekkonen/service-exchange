@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
@@ -91,6 +92,9 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
                   <IconButton aria-label="Edit" href={`/app/#/consumer/edit_request/${request.id}`}>
                     <EditIcon />
                   </IconButton>
+                  <IconButton aria-label="Delete" onClick={() => this.deleteRequest(request.id)}>
+                    <DeleteForeverIcon />
+                  </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
@@ -102,6 +106,20 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
         </Grid>
       </div>
     );
+  }
+
+  private deleteRequest(id:number): void {
+    this.apiService.deleteServiceRequest(id).then(ok => {
+      if (ok) {
+        const myRequests = this.state.myRequests;
+        const request = myRequests.find(r => r.id === id)!;
+        const deleteIdx = myRequests.indexOf(request);
+        myRequests.splice(deleteIdx, 1);
+        this.setState({
+          myRequests
+        });
+      }
+    });
   }
 }
 
