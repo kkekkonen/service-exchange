@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
@@ -54,12 +55,14 @@ interface IMyRequestsProps extends WithStyles<typeof styles> {
 
 interface IState {
   myRequests: IServiceRequest[];
+  isLoading: boolean;
 };
 
 
 class MyRequests extends React.Component<IMyRequestsProps, IState> {
   public state = {
-    myRequests: [] as IServiceRequest[]
+    myRequests: [] as IServiceRequest[],
+    isLoading: true
   };
   private apiService: ApiService;
   public constructor(props: IMyRequestsProps) {
@@ -67,7 +70,9 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyRequests().then(myRequests => this.setState({ myRequests }))
+    this.apiService.getMyRequests().then(myRequests => {
+      this.setState({ myRequests, isLoading: false });
+      })
   }
   public render() {
     const { classes } = this.props;
@@ -76,7 +81,8 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.myRequests.length === 0 &&
+            {this.state.isLoading && <div><CircularProgress size={48} /></div>}
+            {!this.state.isLoading && this.state.myRequests.length === 0 &&
               <Typography variant="body1" gutterBottom>
                 You do not yet have any requests. Why not create one now if you need a service?
               </Typography>

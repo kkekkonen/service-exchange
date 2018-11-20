@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
@@ -36,12 +37,14 @@ interface IMyServiceOffersProps extends WithStyles<typeof styles> {
 
 interface IState {
   myServiceOffers: IServiceOffer[];
+  isLoading: boolean;
 };
 
 
 class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
   public state = {
-    myServiceOffers: [] as IServiceOffer[]
+    myServiceOffers: [] as IServiceOffer[],
+    isLoading: true
   };
   private apiService: ApiService;
   public constructor(props: IMyServiceOffersProps) {
@@ -58,7 +61,8 @@ class MyServiceOffers extends React.Component<IMyServiceOffersProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-              {this.state.myServiceOffers.length === 0 &&
+              {this.state.isLoading && <div><CircularProgress size={48} /></div>}
+              {!this.state.isLoading && this.state.myServiceOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
                 You do not yet have any service offers. Why not create one now if you have something you can provide?
               </Typography>

@@ -4,6 +4,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
@@ -24,12 +25,14 @@ interface IRequestsProps extends WithStyles<typeof styles> {
 
 interface IState {
   serviceRequests: IServiceRequest[];
+  isLoading: boolean;
 };
 
 
 class Requests extends React.Component<IRequestsProps, IState> {
   public state = {
-    serviceRequests: [] as IServiceRequest[]
+    serviceRequests: [] as IServiceRequest[],
+    isLoading: true
   };
   private apiService: ApiService;
   public constructor(props: IRequestsProps) {
@@ -46,7 +49,8 @@ class Requests extends React.Component<IRequestsProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.serviceRequests.map(request => (
+            {this.state.isLoading && <div><CircularProgress size={48} /></div>}
+            {!this.state.isLoading && this.state.serviceRequests.map(request => (
               <ListItem key={request.id} dense button component='a' href={`/app/#/provider/request/${request.id}`}>
                 <Avatar>
                   <ImageIcon />

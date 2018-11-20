@@ -4,6 +4,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import {IService} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
@@ -25,12 +26,14 @@ interface IProviderAcceptedServicesProps extends WithStyles<typeof styles> {
 
 interface IState {
   services: IService[];
+  isLoading: boolean;
 };
 
 
 class ProviderAcceptedServices extends React.Component<IProviderAcceptedServicesProps, IState> {
   public state = {
-    services: [] as IService[]
+    services: [] as IService[],
+    isLoading: true
   };
   private apiService: ApiService;
   public constructor(props: IProviderAcceptedServicesProps) {
@@ -47,7 +50,8 @@ class ProviderAcceptedServices extends React.Component<IProviderAcceptedServices
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-            {this.state.services.length === 0 &&
+            {this.state.isLoading && <div><CircularProgress size={48} /></div>}
+            {!this.state.isLoading && this.state.services.length === 0 &&
               <Typography variant="body1" gutterBottom>
                 You do not have yet any accepted services (no accepted deals from consumers).
               </Typography>

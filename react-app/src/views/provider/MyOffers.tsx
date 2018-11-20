@@ -5,6 +5,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -34,13 +35,15 @@ interface IMyOffersProps extends WithStyles<typeof styles> {
 interface IState {
   myOffers: IServiceRequestOffer[];
   serviceRequests: IServiceRequest[];
+  isLoading: boolean;
 };
 
 
 class MyOffers extends React.Component<IMyOffersProps, IState> {
   public state = {
     myOffers: [] as IServiceRequestOffer[],
-    serviceRequests: [] as IServiceRequest[]
+    serviceRequests: [] as IServiceRequest[],
+    isLoading: true
   };
   private apiService: ApiService;
   public constructor(props: IMyOffersProps) {
@@ -66,7 +69,8 @@ class MyOffers extends React.Component<IMyOffersProps, IState> {
         <Grid className={classes.root} container spacing={16}>
           <Grid item xs={12}>
             <List>
-              {this.state.myOffers.length === 0 &&
+              {this.state.isLoading && <div><CircularProgress size={48} /></div>}
+              {!this.state.isLoading && this.state.myOffers.length === 0 &&
               <Typography variant="body1" gutterBottom>
                 You have not made any offers. Go browse the requests and make offers.
               </Typography>
