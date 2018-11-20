@@ -26,6 +26,7 @@ export interface IServiceRequest
     minPrice: number,
     maxPrice: number,
     category: string,
+    categoryid: number,
     zipcode: number,
     timestamp: string,
     description: string,

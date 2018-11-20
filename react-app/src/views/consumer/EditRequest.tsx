@@ -33,7 +33,6 @@ interface ICreateNewRequestProps extends WithStyles<typeof styles> {
 interface IState {
   categories: ICategory[];
   request: IServiceRequest;
-  categoryId: number;
   hasError: boolean;
   errorText: string;
 };
@@ -42,8 +41,7 @@ interface IState {
 class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteComponentProps, IState> {
   public state = {
     categories: [] as ICategory[],
-    request: {} as IServiceRequest,
-    categoryId: -1,
+    request: { categoryid: -1 } as IServiceRequest,
     hasError: false,
     errorText: ""
   };
@@ -68,14 +66,14 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
             <FormControl fullWidth={true}>
               <InputLabel htmlFor="category-simple">Category</InputLabel>
               <Select
-              value={this.state.categoryId}
-              onChange={this.handleChange}
+              value={this.state.request.categoryid}
+              onChange={this.handleRequestChange}
               inputProps={{
-                name: 'categoryId',
+                name: 'categoryid',
                 id: 'category-simple',
               }}
               >
-                <MenuItem value="">
+                <MenuItem value={-1}>
                   <em>None</em>
                 </MenuItem>
                 {this.state.categories.map(category => (
@@ -104,14 +102,9 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
     this.setState({request: object} as any);
   }
 
-  private handleChange = (event: {}) => {
-    const e = event as React.ChangeEvent<HTMLInputElement>;
-    this.setState({[e.target.name]: e.target.value} as any);
-  }
-
   private handleSubmit(event: any, caller: CreateNewRequest) {
     event.preventDefault();
-    if (this.state.categoryId === -1) {
+    if (this.state.request.categoryid === -1) {
       this.setState({
         hasError: true,
         errorText: "You must select a category."
@@ -119,7 +112,7 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
       return;
     }
     const title = this.state.request.title;
-    const categoryId = this.state.categoryId;
+    const categoryId = event.target.categoryid.value as number;
     const minPrice = this.state.request.minPrice as number;
     const maxPrice = this.state.request.maxPrice as number;
     const zipCode = this.state.request.zipcode as number;
