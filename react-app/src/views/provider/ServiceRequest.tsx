@@ -156,6 +156,9 @@ class ProviderServiceRequest extends React.Component<IProviderServiceRequestProp
                 {!this.state.serviceRequest.isOwner &&
                 <Grid container spacing={16}>
                   <Grid item xs={12}>
+                    {this.state.serviceRequest.consumer}
+                  </Grid>
+                  <Grid item xs={12}>
                     <Button href={`/app/#/publicprofile/${this.state.serviceRequest.consumerid}`} variant="contained" color="secondary" className="button">
                       View profile
                     </Button>
