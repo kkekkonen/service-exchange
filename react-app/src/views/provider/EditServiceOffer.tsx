@@ -141,7 +141,7 @@ class EditServiceOffer extends React.Component<IEditServiceOfferProps & RouteCom
         } else {
           this.setState({
             hasError: true,
-            errorText: "Save was not succesful. Try again."
+            errorText: "Save was not successful. Try again."
           });
         }
       })

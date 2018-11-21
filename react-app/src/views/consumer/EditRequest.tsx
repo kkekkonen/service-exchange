@@ -125,7 +125,7 @@ class CreateNewRequest extends React.Component<ICreateNewRequestProps & RouteCom
       } else {
         this.setState({
           hasError: true,
-          errorText: "Save was not succesful. Try again."
+          errorText: "Save was not successful. Try again."
         });
       }
     })
