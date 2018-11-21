@@ -43,7 +43,9 @@ export interface IUserProfile
     firstName: string,
     lastName: string,
     email: string,
-    password: string,
+    currentPassword: string,
+    newPassword: string,
+    newPasswordAgain: string,
 }
 
 export interface IServiceRequestOffer
