@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import update_session_auth_hash
 from django.core import serializers
 from app.models import *
 from django.contrib.auth.decorators import login_required
@@ -596,6 +597,7 @@ def change_password(request):
         if user.check_password(password) and newPassword1 == newPassword2:
             user.set_password(newPassword1)
             user.save()
+            update_session_auth_hash(request, user)
             return HttpResponse(status=200)
         return HttpResponse(status=400)
     else:
