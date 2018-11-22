@@ -48,7 +48,6 @@ const styles = (theme: Theme) =>
     },
   },
   menuButton: {
-    marginRight: 20,
     marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
