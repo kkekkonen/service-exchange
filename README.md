@@ -1,8 +1,11 @@
 # service_exchange
 
+1) Install Python (version 3) and pip.
+2) Install node and npm.
+
 # Development #
 
-_TODO install requirements_
+install requirements.txt with pip
 
 ## Django ##
 python3 manage.py runserver
