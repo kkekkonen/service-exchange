@@ -99,6 +99,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
       this.props.history.listen((location, action) => {
         console.log("on route change");
         this.checkShowBackButton();
+        this.handleDrawerToggle();
       });
       this.checkShowBackButton();
     }
