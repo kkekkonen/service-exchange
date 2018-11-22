@@ -6,11 +6,13 @@ import {ApiService} from '../../services/apiservice'
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import {IService} from '../../models/models'
 import ImageIcon from '@material-ui/icons/Image';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core';
@@ -18,6 +20,8 @@ import { createStyles } from '@material-ui/core';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+    },
+    textfield: {
     }
 });
 
@@ -26,14 +30,18 @@ interface IConsumerAcceptedServicesProps extends WithStyles<typeof styles> {
 
 interface IState {
   services: IService[];
+  initialServices: IService[];
   isLoading: boolean;
+  searchfor: string;
 };
 
 
 class ConsumerAcceptedServices extends React.Component<IConsumerAcceptedServicesProps, IState> {
   public state = {
     services: [] as IService[],
-    isLoading: true
+    initialServices: [] as IService[],
+    isLoading: true,
+    searchfor: ''
   };
   private apiService: ApiService;
   public constructor(props: IConsumerAcceptedServicesProps) {
@@ -41,7 +49,7 @@ class ConsumerAcceptedServices extends React.Component<IConsumerAcceptedServices
     this.apiService = new ApiService();
   }
   public componentDidMount(){
-    this.apiService.getMyConsumerServices().then(services => this.setState({ services, isLoading: false }))
+    this.apiService.getMyConsumerServices().then(services => this.setState({ services, initialServices: services, isLoading: false }))
   }
   public render() {
     const { classes } = this.props;
@@ -51,11 +59,21 @@ class ConsumerAcceptedServices extends React.Component<IConsumerAcceptedServices
           <Grid item xs={12}>
             <List>
             {this.state.isLoading && <div><CircularProgress size={48} /></div>}
-            {!this.state.isLoading && this.state.services.length === 0 &&
+            {!this.state.isLoading && this.state.services.length === 0 && this.state.searchfor === '' &&
               <Typography variant="body1" gutterBottom>
                 You do not have yet any accepted services (no deals made with providers).
               </Typography>
             }
+            <TextField
+              name='search'
+              fullWidth={true}
+              className={classes.textfield}
+              placeholder="Search"
+              value={this.state.searchfor || ''}
+              onChange={this.filterList}
+              margin="normal"
+            />
+            <Divider />
             {this.state.services.map(service => (
               <ListItem key={service.id} dense button component='a' href={`/app/#/consumer/service/${service.id}`}>
                 <Avatar>
@@ -70,6 +88,21 @@ class ConsumerAcceptedServices extends React.Component<IConsumerAcceptedServices
       </div>
     );
   }
+
+  private filterList = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let updatedList = this.state.initialServices;
+    this.setState({ searchfor: event.target.value.toLowerCase() });
+    updatedList = updatedList.filter((item) => {
+      return item.title.toLowerCase().search(
+        event.target.value.toLowerCase()) !== -1;
+    });
+    if (event.target.value.length > 0) {
+      this.setState({ services: updatedList });
+    } else {
+      this.setState({ services: this.state.initialServices });
+    }
+  }
+
 }
 
 export default withStyles(styles, { withTheme: true })(ConsumerAcceptedServices);

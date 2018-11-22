@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Divider from '@material-ui/core/Divider';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import {IServiceRequest} from '../../models/models'
@@ -19,6 +20,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { createStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
@@ -47,7 +49,9 @@ const styles = (theme: Theme) =>
       textDecoration: 'none',
       fontWeight: 'bold',
       color: '#fff'
-    }
+    },
+    textfield: {
+    },
 });
 
 interface IMyRequestsProps extends WithStyles<typeof styles> {
@@ -55,14 +59,18 @@ interface IMyRequestsProps extends WithStyles<typeof styles> {
 
 interface IState {
   myRequests: IServiceRequest[];
+  initialMyRequests: IServiceRequest[];
   isLoading: boolean;
+  searchfor: string;
 };
 
 
 class MyRequests extends React.Component<IMyRequestsProps, IState> {
   public state = {
     myRequests: [] as IServiceRequest[],
-    isLoading: true
+    initialMyRequests: [] as IServiceRequest[],
+    isLoading: true,
+    searchfor: ''
   };
   private apiService: ApiService;
   public constructor(props: IMyRequestsProps) {
@@ -71,9 +79,10 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
   }
   public componentDidMount(){
     this.apiService.getMyRequests().then(myRequests => {
-      this.setState({ myRequests, isLoading: false });
-      })
+      this.setState({ myRequests, initialMyRequests: myRequests, isLoading: false });
+    })
   }
+
   public render() {
     const { classes } = this.props;
     return (
@@ -82,11 +91,21 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
           <Grid item xs={12}>
             <List>
             {this.state.isLoading && <div><CircularProgress size={48} /></div>}
-            {!this.state.isLoading && this.state.myRequests.length === 0 &&
+            {!this.state.isLoading && this.state.myRequests.length === 0 && this.state.searchfor === '' &&
               <Typography variant="body1" gutterBottom>
                 You do not yet have any requests. Why not create one now if you need a service?
               </Typography>
             }
+            <TextField
+              name='search'
+              fullWidth={true}
+              className={classes.textfield}
+              placeholder="Search"
+              value={this.state.searchfor || ''}
+              onChange={this.filterList}
+              margin="normal"
+            />
+            <Divider />
             {this.state.myRequests.map(request => (
               <ListItem key={request.id} dense button component='a' href={`/app/#/request/${request.id}`}>
                 <Avatar>
@@ -127,6 +146,21 @@ class MyRequests extends React.Component<IMyRequestsProps, IState> {
       }
     });
   }
+
+  private filterList = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let updatedList = this.state.initialMyRequests;
+    this.setState({ searchfor: event.target.value.toLowerCase() });
+    updatedList = updatedList.filter((item) => {
+      return item.title.toLowerCase().search(
+        event.target.value.toLowerCase()) !== -1;
+    });
+    if (event.target.value.length > 0) {
+      this.setState({ myRequests: updatedList });
+    } else {
+      this.setState({ myRequests: this.state.initialMyRequests });
+    }
+  }
+
 }
 
 export default withStyles(styles, { withTheme: true })(MyRequests);
