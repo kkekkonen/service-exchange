@@ -99,7 +99,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
       this.props.history.listen((location, action) => {
         console.log("on route change");
         this.checkShowBackButton();
-        this.handleDrawerToggle();
+        this.setState(state => ({ mobileOpen: false }));
       });
       this.checkShowBackButton();
     }
@@ -188,7 +188,7 @@ class ResponsiveDrawer extends React.Component<IResponsiveDrawerProps & RouteCom
           <CssBaseline />
           <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
-              {this.state.showBackButton === true &&
+              {this.state.showBackButton &&
                 <IconButton color="inherit" aria-label="Back" onClick={this.handleNavigateBack}>
                   <ArrowBackIcon />
                 </IconButton>
